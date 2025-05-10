@@ -1,22 +1,63 @@
+// #include "meshLoader.h"
+#include "grassBlock.h"
+#include "grassPlatform.h"
 #include "player.h"
 #include "scene.h"
+#include "sword.h"
 #include <GL/glut.h>
 #include <math.h>
 #include <stdio.h>
+#include <string.h>
 
 int lastMouseX, lastMouseY;
 int firstMouse = 1;
 int ignoreWarp = 0;
 
+GrassBlock *grassBlock;
+Sword *sword;
+
 void init() {
-  glClearColor(0.75f, 0.75f, 1.0f, 1.0f);
+  glClearColor(0.75f, 0.75f, 1.0f, 1.0f); // Fundo azul claro
+
+  glEnable(GL_LIGHTING);
+  glEnable(GL_DEPTH_TEST);
+  glEnable(GL_LIGHT0);
+
+  // Definir luz ambiente (suave)
+  GLfloat ambient[] = {0.2f, 0.2f, 0.2f, 1.0f}; // Luz ambiente suave
+  glLightfv(GL_LIGHT0, GL_AMBIENT, ambient);
+
+  // Definir luz difusa (brilhante, ilumina a cena)
+  GLfloat diffuse[] = {0.8f, 0.8f, 0.8f, 1.0f}; // Luz branca
+  glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse);
+
+  // Definir posição da luz direcional (sol)
+  GLfloat position[] = {-1.0f, -1.0f, -0.5f, 0.0f}; // Luz direcional (sol)
+  glLightfv(GL_LIGHT0, GL_POSITION, position);
+
+  // Ativar luz 1 (para efeitos de reflexos)
+  glEnable(GL_LIGHT1);
+  GLfloat position1[] = {1.0f, 1.0f, 1.0f, 1.0f}; // Luz pontual
+  glLightfv(GL_LIGHT1, GL_POSITION, position1);
+
+  // Definir a luz pontual
+  GLfloat diffuse1[] = {0.5f, 0.5f, 0.5f, 1.0f};
+  glLightfv(GL_LIGHT1, GL_DIFFUSE, diffuse1);
+  GLfloat specular1[] = {1.0f, 1.0f, 1.0f, 1.0f};
+  glLightfv(GL_LIGHT1, GL_SPECULAR, specular1);
+
+  grassBlock = grassBlockBuilder();
+  sword = swordBuilder();
+  loadPlatform();
+  loadPlayer();
   initCamera();
 }
 
 void display() {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glLoadIdentity();
-  drawScene();
+  drawScene(grassBlock, sword);
+  // draw_mesh(&model);
   glutSwapBuffers();
 }
 
@@ -68,11 +109,9 @@ int main(int argc, char **argv) {
   glutInit(&argc, argv);
   glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
 
-  glutInitWindowSize(1920, 1080); // ou qualquer resolução do seu monitor
+  glutInitWindowSize(1920, 1080);
   glutCreateWindow("Jogo em 3D - Primeira Pessoa");
   glutFullScreen();
-
-  glEnable(GL_DEPTH_TEST);
 
   int w = glutGet(GLUT_WINDOW_WIDTH);
   int h = glutGet(GLUT_WINDOW_HEIGHT);

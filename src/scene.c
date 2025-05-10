@@ -1,8 +1,11 @@
-#include "platform.h"
+#include "scene.h"
+#include "floor.h"
+#include "grassBlock.h"
+#include "grassPlatform.h"
 #include "player.h"
 #include <GL/glut.h>
 
-void drawScene() {
+void drawScene(GrassBlock *grassBlock, Sword *sword) {
   updateCamera();
 
   /**
@@ -13,45 +16,56 @@ void drawScene() {
    * mapa.
    **/
 
-  // exemplo
-  drawPlatform(6.0f, 0.0f, 0.0f, 4.0f, 0.2f, 3.0f);
-
-  /**
-   * mudar o cenário depois
-   */
-
-  // chão
-  glColor3f(0.5f, 0.5f, 0.5f);
-  glBegin(GL_QUADS);
-  glVertex3f(-20.0f, -1.5f, 20.0f);
-  glVertex3f(20.0f, -1.5f, 20.0f);
-  glVertex3f(20.0f, -1.5f, -20.0f);
-  glVertex3f(-20.0f, -1.5f, -20.0f);
-  glEnd();
+  // bloco 0
+  glPushMatrix();
+  glTranslatef(12.0f, -0.7f, 5.0f);
+  grassBlock->draw(grassBlock);
+  glPopMatrix();
 
   // bloco 1
   glPushMatrix();
-  glTranslatef(0.0f, -1.5f + (2.0f / 2.0f), -5.0f); // y = -0.5
-  glScalef(2.0f, 2.0f, 2.0f);
-  glColor3f(0.8f, 0.2f, 0.2f);
-  glutSolidCube(1.0);
+  glTranslatef(10.0f, 0.0f, 5.0f);
+  grassBlock->draw(grassBlock);
   glPopMatrix();
 
   // bloco 2
   glPushMatrix();
-  glTranslatef(3.0f, -1.5f + (2.5f / 2.0f), -8.0f); // y = -0.25
-  glScalef(2.5f, 2.5f, 2.5f);
-  glColor3f(0.2f, 0.2f, 0.8f);
-  glutSolidCube(1.0);
+  glTranslatef(8.0f, 1.0f, 5.0f);
+  grassBlock->draw(grassBlock);
   glPopMatrix();
 
   // bloco 3
   glPushMatrix();
-  glTranslatef(-4.0f, -1.5f + (1.0f / 2.0f), -12.0f); // y = -1.0
-  glScalef(3.0f, 1.0f, 3.0f);
-  glColor3f(0.2f, 0.8f, 0.2f);
-  glutSolidCube(1.0);
+  glTranslatef(6.0f, 2.0f, 5.0f);
+  grassBlock->draw(grassBlock);
   glPopMatrix();
+
+  // plataforma
+  glPushMatrix();
+  glTranslatef(3.0f, 3.0f, 5.0f);
+  drawGrassPlatform();
+  glPopMatrix();
+
+  // bloco 4
+  glPushMatrix();
+  glTranslatef(3.0f, 3.0f, 9.0f);
+  grassBlock->draw(grassBlock);
+  glPopMatrix();
+
+  // bloco 5
+  glPushMatrix();
+  glTranslatef(3.0f, 1.5f, 12.0f);
+  grassBlock->draw(grassBlock);
+  glPopMatrix();
+
+  // prêmio (espada)
+  glPushMatrix();
+  glTranslatef(-3.8f, 2.4f, 7.2f);
+  sword->draw(sword);
+  glPopMatrix();
+
+  // chão com material
+  drawFloor(0.0f, 0.0f, 0.0f, 2.0f, 2.0f, 2.0f);
 
   drawPlayer();
 }

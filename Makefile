@@ -18,8 +18,13 @@ endif
 all: libsGame Game
 
 libsGame: \
-	$(OBJ)/platform.o \
+	$(OBJ)/grassPlatform.o \
+	$(OBJ)/meshLoader.o \
+	$(OBJ)/grassBlock.o \
 	$(OBJ)/player.o \
+	$(OBJ)/steve.o \
+	$(OBJ)/sword.o \
+	$(OBJ)/floor.o \
 	$(OBJ)/scene.o
 
 Game: clear_app \
