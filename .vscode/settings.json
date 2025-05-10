@@ -5,9 +5,14 @@
   "C_Cpp.clang_format_style": "file",
   "editor.formatOnSave": true,
   "files.associations": {
+    "*.dbclient-js": "javascript",
+    "*.embeddedhtml": "html",
+    "*.css": "tailwindcss",
     "cam.h": "c",
     "player.h": "c",
-    "glut.h": "c"
+    "glut.h": "c",
+    "stdlib.h": "c",
+    "blocks.h": "c"
   },
   "C_Cpp.errorSquiggles": "disabled"
 }

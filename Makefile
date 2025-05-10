@@ -20,7 +20,9 @@ all: libsGame Game
 libsGame: \
 	$(OBJ)/platform.o \
 	$(OBJ)/player.o \
-	$(OBJ)/scene.o
+	$(OBJ)/scene.o \
+	$(OBJ)/blocks.o \
+	$(OBJ)/parse-blocks.o
 
 Game: clear_app \
 	$(BIN)/game
