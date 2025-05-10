@@ -108,7 +108,7 @@ int main(int argc, char **argv) {
   // init();
   // glutMainLoop();
 
-  load_blocks_from_file("/home/daniel/projects/comp.grafica.game/blocks.txt");
+  load_blocks_from_file("./blocks.3d");
 
   return 0;
 }
