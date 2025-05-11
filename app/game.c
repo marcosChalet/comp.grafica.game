@@ -1,3 +1,4 @@
+#include "parse-blocks.h"
 #include "player.h"
 #include "scene.h"
 #include <GL/glut.h>
@@ -15,6 +16,18 @@ void init() {
 
 void display() {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+  // atualizar blocos
+  //  as peculiaridades de cada um e registra ações no player na fila de evento
+  // atuliazar fisica
+  //  registra em uma fila de eventos
+  //    gravidade
+  //    colisão
+  //    talvez deslizar
+  // atualizar player
+  //   processa eventos de input
+  //    mouse e teclado e registra na fila
+
   glLoadIdentity();
   drawScene();
   glutSwapBuffers();
@@ -65,35 +78,37 @@ void timer(int value) {
 }
 
 int main(int argc, char **argv) {
-  glutInit(&argc, argv);
-  glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
+  // glutInit(&argc, argv);
+  // glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
 
-  glutInitWindowSize(1920, 1080); // ou qualquer resolução do seu monitor
-  glutCreateWindow("Jogo em 3D - Primeira Pessoa");
-  glutFullScreen();
+  // glutInitWindowSize(1920, 1080); // ou qualquer resolução do seu monitor
+  // glutCreateWindow("Jogo em 3D - Primeira Pessoa");
+  // glutFullScreen();
 
-  glEnable(GL_DEPTH_TEST);
+  // glEnable(GL_DEPTH_TEST);
 
-  int w = glutGet(GLUT_WINDOW_WIDTH);
-  int h = glutGet(GLUT_WINDOW_HEIGHT);
-  glViewport(0, 0, w, h);
-  glMatrixMode(GL_PROJECTION);
-  glLoadIdentity();
-  gluPerspective(60.0, (float)w / (float)h, 0.1, 100.0);
-  glMatrixMode(GL_MODELVIEW);
+  // int w = glutGet(GLUT_WINDOW_WIDTH);
+  // int h = glutGet(GLUT_WINDOW_HEIGHT);
+  // glViewport(0, 0, w, h);
+  // glMatrixMode(GL_PROJECTION);
+  // glLoadIdentity();
+  // gluPerspective(60.0, (float)w / (float)h, 0.1, 100.0);
+  // glMatrixMode(GL_MODELVIEW);
 
-  glutDisplayFunc(display);
+  // glutDisplayFunc(display);
 
-  glutKeyboardFunc(keyboard);
-  glutKeyboardUpFunc(keyboardUp);
-  glutPassiveMotionFunc(passiveMotion);
-  glutMotionFunc(passiveMotion);
+  // glutKeyboardFunc(keyboard);
+  // glutKeyboardUpFunc(keyboardUp);
+  // glutPassiveMotionFunc(passiveMotion);
+  // glutMotionFunc(passiveMotion);
 
-  glutTimerFunc(0, timer, 0);
+  // glutTimerFunc(0, timer, 0);
 
-  glutSetCursor(GLUT_CURSOR_NONE);
-  init();
-  glutMainLoop();
+  // glutSetCursor(GLUT_CURSOR_NONE);
+  // init();
+  // glutMainLoop();
+
+  load_blocks_from_file("./blocks.3d");
 
   return 0;
 }
