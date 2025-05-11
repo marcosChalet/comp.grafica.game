@@ -1,6 +1,8 @@
 #ifndef BLOCKS_H
 #define BLOCKS_H
 
+#include <stdbool.h>
+
 typedef enum block_behavior_type {
   BLOCK_T_SPAWN,
   BLOCK_T_NONE,
@@ -21,12 +23,16 @@ typedef enum block_type {
 
 typedef struct block {
   BLOCK_BASE
+  void (*draw)(void *);
 } BlockBasic;
 
 typedef struct moving_block {
   BLOCK_BASE
+  float start_position_z;
+  bool is_backing;
   float speed;
   float amplitude;
+  void (*draw)(void *);
 } MovingBlock;
 
 BlockBasic *create_block(BlockBasic);

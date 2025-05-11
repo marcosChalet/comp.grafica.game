@@ -23,8 +23,6 @@ void destroy_block_basic(BlockBasic *b) {
 MovingBlock *create_moving_block(MovingBlock mv) {
   MovingBlock *new_block = (MovingBlock *)malloc(sizeof(MovingBlock));
 
-  new_block->start_position_z = mv.z;
-
   new_block->x = mv.x;
   new_block->y = mv.y;
   new_block->z = mv.z;
