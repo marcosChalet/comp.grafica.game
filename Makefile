@@ -1,4 +1,5 @@
 SRC = ./src
+3DOBJECTS = ./3d-objects
 OBJ = ./obj
 BIN = ./bin
 INCLUDE = ./include
@@ -26,6 +27,9 @@ libsGame: \
 
 Game: clear_app \
 	$(BIN)/game
+
+$(OBJ)/%.o: $(3DOBJECTS)/%.c $(INCLUDE)/%.h
+	gcc $(FLAG) -c $< -I $(INCLUDE) -o $@
 
 $(OBJ)/%.o: $(SRC)/%.c $(INCLUDE)/%.h
 	gcc $(FLAG) -c $< -I $(INCLUDE) -o $@

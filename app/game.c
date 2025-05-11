@@ -108,7 +108,7 @@ int main(int argc, char **argv) {
   // init();
   // glutMainLoop();
 
-  load_blocks_from_file("./blocks.3d");
+  load_blocks_from_file("./3d-objects/blocks.conf");
 
   return 0;
 }
