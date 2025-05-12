@@ -1,19 +1,28 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
+#include <GL/glut.h>
+
 typedef struct player {
-  float x, y, z;
-  int isJumping;
+  GLdouble x;
+  GLdouble y;
+  GLdouble z;
+  GLdouble gazeDirectionX;
+  GLdouble gazeDirectionY;
+  GLdouble gazeDirectionZ;
+  GLdouble groundLevel;
+  float sensibility;
   float jumpVelocity;
   float jumpStrength;
+  int isJumping;
   float speed;
 } Player;
 
-void drawPlayer();
-void updatePosition();
-void processKeyboard(unsigned char key, int isPressed);
-void processMouse(float offsetX, float offsetY);
-void initCamera();
-void updateCamera();
+void move_player();
+void change_position_direction(unsigned char key, int isPressed);
+void init_player(float x, float y, float z, Player *player_ref);
+void change_look_direction(float offsetX, float offsetY);
+void update_player_sensibility(float sensibility);
+void update_player_position();
 
 #endif
