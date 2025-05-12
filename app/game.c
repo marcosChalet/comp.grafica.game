@@ -1,3 +1,4 @@
+#include "global.h"
 #include "parse-blocks.h"
 #include "player.h"
 #include "scene.h"
@@ -108,7 +109,9 @@ int main(int argc, char **argv) {
   // init();
   // glutMainLoop();
 
+  init_global_data();
   load_blocks_from_file("./3d-objects/blocks.conf");
+  printf("Qtd: %d\n", get_global_obj()->block_list->size);
 
   return 0;
 }

@@ -1,4 +1,6 @@
 #include "blocks.h"
+
+#include "global.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -62,6 +64,7 @@ void load_blocks_from_file(const char *filename) {
                           .amplitude = amplitude};
 
       MovingBlock *mb = create_moving_block(temp);
+      addBlockToGlobalData(mb);
       print_block((BlockBasic *)mb); // imprime para debug
 
     } else {
@@ -73,6 +76,7 @@ void load_blocks_from_file(const char *filename) {
                          .block_type = block_type};
 
       BlockBasic *b = create_block(temp);
+      addBlockToGlobalData(b);
       print_block(b); // imprime para debug
     }
   }
