@@ -1,34 +1,34 @@
-#include "blocs.h"
-#include "parse-blocs.h"
+#include "blocks.h"
+#include "parse-blocks.h"
 
 #include <stdlib.h>
 
 #define MAX_SIZE 10000
 
-BlocGeneric **stage_blocs;
+BlockGeneric **stage_blocks;
 
 void load_stage(char *path) {
-  stage_blocs = malloc(sizeof(BlocGeneric *) * MAX_SIZE);
+  stage_blocks = malloc(sizeof(BlockGeneric *) * MAX_SIZE);
   for (int i = 0; i < MAX_SIZE; i++) {
-    stage_blocs[i] = malloc(sizeof(BlocGeneric));
+    stage_blocks[i] = malloc(sizeof(BlockGeneric));
   }
-  load_blocs_from_file(path, stage_blocs);
+  load_blocks_from_file(path, stage_blocks);
 }
 
 void render_stage() {
   for (int i = 0; i < MAX_SIZE; i++) {
-    if (!stage_blocs[i])
+    if (!stage_blocks[i])
       return;
-    if (stage_blocs[i]->type == BLOC_T_MOVING) {
-      draw_moving_bloc((MovingBloc *)stage_blocs[i]->bloc);
+    if (stage_blocks[i]->type == BLOCK_T_MOVING) {
+      draw_moving_block((MovingBlock *)stage_blocks[i]->block);
     } else {
-      draw_bloc((BlocBasic *)stage_blocs[i]->bloc);
+      draw_block((BlockBasic *)stage_blocks[i]->block);
     }
   }
 }
 
 void free_stage() {
   for (int i = 0; i < MAX_SIZE; i++) {
-    free(stage_blocs[i]);
+    free(stage_blocks[i]);
   }
 }

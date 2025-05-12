@@ -1,5 +1,6 @@
-#include "blocs.h"
-#include "parse-blocs.h"
+#include "blocks.h"
+#include "global.h"
+#include "parse-blocks.h"
 #include "player.h"
 #include "scene.h"
 #include "stage-loader.h"
@@ -14,13 +15,13 @@ void init() {
   glClearColor(0.75f, 0.75f, 1.0f, 1.0f);
   init_player(0, 0, 0, &player);
   load_stage("./3d-objects/stage-1.conf");
-  // load_blocs_from_file("./3d-objects/blocs.conf", blocs);
+  // load_blocks_from_file("./3d-objects/blocks.conf", blocks);
 }
 
 void display() {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-  // atualizar blocos
+  // atualizar blockos
   //  as peculiaridades de cada um e registra ações no player na fila de evento
   // atuliazar fisica
   //  registra em uma fila de eventos

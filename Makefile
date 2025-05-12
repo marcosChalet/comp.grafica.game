@@ -20,12 +20,14 @@ all: libsGame Game
 
 libsGame: \
 	$(OBJ)/stage-loader.o \
+	$(OBJ)/parse-blocks.o \
+	$(OBJ)/block-list.o \
 	$(OBJ)/platform.o \
 	$(OBJ)/player.o \
+	${OBJ}/global.o \
 	$(OBJ)/scene.o \
-	$(OBJ)/blocs.o \
-	$(OBJ)/parse-blocs.o
-
+	$(OBJ)/blocks.o
+	
 Game: clear_app \
 	$(BIN)/game
 
