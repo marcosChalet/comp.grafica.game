@@ -16,8 +16,8 @@ void draw_block(BlockBasic *b) {
   glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
 
   glColor3f(0.2, 0.9, 0.2);
-  glTranslatef((b->x + b->size) / 2 - 0.5, (b->y + b->size) / 2 - 1.1, (b->z + b->size) / 2 - 1.1);
-  glutSolidCube(b->size / 1.5);
+  glTranslatef(b->x, b->y, b->z);
+  glutSolidCube(b->size);
   glPopMatrix();
 }
 
@@ -33,9 +33,8 @@ void draw_moving_block(MovingBlock *mv) {
   glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
 
   glColor3f(0.2, 0.9, 0.2);
-  glTranslatef((mv->x + mv->size) / 2 - 0.5, (mv->y + mv->size) / 2 - 1.1,
-               (mv->z + mv->size) / 2 - 1.1);
-  glutSolidCube(mv->size / 1.5);
+  glTranslatef(mv->x, mv->y, mv->z);
+  glutSolidCube(mv->size);
   glPopMatrix();
 }
 

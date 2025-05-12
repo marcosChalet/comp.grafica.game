@@ -13,7 +13,9 @@
     "glut.h": "c",
     "stdlib.h": "c",
     "blocks.h": "c",
-    "block-list.h": "c"
+    "block-list.h": "c",
+    "stdio.h": "c",
+    "stage-loader.h": "c"
   },
   "C_Cpp.errorSquiggles": "disabled"
 }

@@ -3,8 +3,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-BlockkList *create_block_list() {
-  BlockkList *list = (BlockkList *)malloc(sizeof(BlockkList));
+BlockList *create_block_list() {
+  BlockList *list = (BlockList *)malloc(sizeof(BlockList));
   if (list == NULL) {
     return NULL;
   }
@@ -17,12 +17,12 @@ BlockkList *create_block_list() {
   return list;
 }
 
-void addBlockkToList(BlockkList *list, void *block) {
+void addBlockToList(BlockList *list, void *block, BlockBehaviorType type) {
   if (list == NULL || block == NULL) {
     return;
   }
 
-  BlockkWrapper *wrapper = create_block_wrapper(++list->max_id, block);
+  BlockWrapper *wrapper = create_block_wrapper(++list->max_id, block, type);
   if (wrapper == NULL) {
     return;
   }
@@ -38,14 +38,14 @@ void addBlockkToList(BlockkList *list, void *block) {
   list->size++;
 }
 
-void destroy_block_list(BlockkList *block_list) {
+void destroy_block_list(BlockList *block_list) {
   if (block_list == NULL) {
     return;
   }
 
-  BlockkWrapper *current = block_list->head;
+  BlockWrapper *current = block_list->head;
   while (current != NULL) {
-    BlockkWrapper *next = current->next;
+    BlockWrapper *next = current->next;
     destroy_block_wrapper(current);
     current = next;
   }
@@ -53,18 +53,20 @@ void destroy_block_list(BlockkList *block_list) {
   free(block_list);
 }
 
-BlockkWrapper *create_block_wrapper(int id, void *block) {
-  BlockkWrapper *wrapper = (BlockkWrapper *)malloc(sizeof(BlockkWrapper));
+BlockWrapper *create_block_wrapper(int id, void *block, BlockBehaviorType type) {
+  BlockWrapper *wrapper = (BlockWrapper *)malloc(sizeof(BlockWrapper));
   if (wrapper == NULL) {
     return NULL;
   }
+
+  wrapper->type = type;
   wrapper->id = id;
   wrapper->block = block;
 
   return wrapper;
 }
 
-void destroy_block_wrapper(BlockkWrapper *wrapper) {
+void destroy_block_wrapper(BlockWrapper *wrapper) {
   if (wrapper != NULL) {
     free(wrapper);
   }

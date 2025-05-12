@@ -21,11 +21,6 @@ typedef enum block_type {
   BlockBehaviorType behavior_type;                                                                 \
   BlockTypeEnum block_type;
 
-typedef struct generic_block {
-  void *block;
-  BlockBehaviorType type;
-} BlockGeneric;
-
 typedef struct block {
   BLOCK_BASE
 } BlockBasic;

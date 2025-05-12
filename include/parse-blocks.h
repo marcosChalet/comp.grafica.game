@@ -3,6 +3,6 @@
 
 #include "blocks.h"
 
-void load_blocks_from_file(const char *filename, BlockGeneric **blocks);
+void load_blocks_from_file(const char *filename);
 
 #endif

@@ -6,11 +6,10 @@ Player *player_ptr;
 
 float yaw = -90.0f, pitch = 0.0f;
 
-const float gravity = -0.01f;
+const float gravity = -0.0009f;
 bool is_jumping = false;
 
 int keys[256] = {0};
-int events[256] = {0};
 
 void init_player(float x, float y, float z, Player *player_ref) {
   player_ptr = player_ref;
@@ -19,9 +18,9 @@ void init_player(float x, float y, float z, Player *player_ref) {
   player_ptr->y = y;
   player_ptr->z = z;
 
-  player_ptr->speed = 0.07f;
+  player_ptr->speed = 0.015f;
   player_ptr->isJumping = 0;
-  player_ptr->jumpStrength = 0.15f;
+  player_ptr->jumpStrength = 0.022f;
   player_ptr->jumpVelocity = 0.0f;
   player_ptr->sensibility = 0.03f;
   player_ptr->groundLevel = player_ptr->y;

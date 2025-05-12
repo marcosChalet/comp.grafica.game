@@ -13,9 +13,9 @@ Player player;
 
 void init() {
   glClearColor(0.75f, 0.75f, 1.0f, 1.0f);
+  init_global_data();
   init_player(0, 0, 0, &player);
   load_stage("./3d-objects/stage-1.conf");
-  // load_blocks_from_file("./3d-objects/blocks.conf", blocks);
 }
 
 void display() {

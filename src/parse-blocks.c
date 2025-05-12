@@ -1,12 +1,11 @@
-#include "global.h"
 #include "parse-blocks.h"
+#include "global.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 #define MAX_LINE 256
-int num_blocks = 0;
 
 BlockBehaviorType parse_behavior(const char *str) {
   if (strcmp(str, "BLOCK_T_SPAWN") == 0)
@@ -26,7 +25,7 @@ BlockTypeEnum parse_block_type(const char *str) {
   return -1;
 }
 
-void load_blocks_from_file(const char *filename, BlockGeneric **blocks) {
+void load_blocks_from_file(const char *filename) {
   FILE *file = fopen(filename, "r");
   if (!file) {
     perror("Erro ao abrir arquivo");
@@ -70,9 +69,7 @@ void load_blocks_from_file(const char *filename, BlockGeneric **blocks) {
                           .amplitude = amplitude};
 
       MovingBlock *mb = create_moving_block(temp);
-      blocks[num_blocks]->block = mb;
-      blocks[num_blocks++]->type = behavior;
-      // blocks[num_blocks] = NULL;
+      addBlockToGlobalData(mb, behavior);
       print_block((BlockBasic *)mb); // imprime para debug
 
     } else {
@@ -90,13 +87,10 @@ void load_blocks_from_file(const char *filename, BlockGeneric **blocks) {
                          .block_type = block_type};
 
       BlockBasic *b = create_block(temp);
-      blocks[num_blocks]->block = b;
-      blocks[num_blocks++]->type = behavior;
-
+      addBlockToGlobalData(b, behavior);
       print_block(b); // imprime para debug
     }
   }
 
-  blocks[num_blocks] = NULL;
   fclose(file);
 }

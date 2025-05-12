@@ -11,13 +11,13 @@ void drawScene() {
   // drawPlatform(6.0f, 0.0f, 0.0f, 4.0f, 0.2f, 3.0f);
 
   // chão
-  glColor3f(0.5f, 0.5f, 0.5f);
-  glBegin(GL_QUADS);
-  glVertex3f(-20.0f, -1.0f, 20.0f);
-  glVertex3f(20.0f, -1.0f, 20.0f);
-  glVertex3f(20.0f, -1.0f, -20.0f);
-  glVertex3f(-20.0f, -1.0f, -20.0f);
-  glEnd();
+  // glColor3f(0.5f, 0.5f, 0.5f);
+  // glBegin(GL_QUADS);
+  // glVertex3f(-3.0f, -0.1f, 3.0f);
+  // glVertex3f(3.0f, -0.1f, 3.0f);
+  // glVertex3f(3.0f, -0.1f, -3.0f);
+  // glVertex3f(-3.0f, -0.1f, -3.0f);
+  // glEnd();
 
   // blocko 1
   // glPushMatrix();
