@@ -19,11 +19,12 @@ endif
 all: libsGame Game
 
 libsGame: \
+	$(OBJ)/stage-loader.o \
 	$(OBJ)/platform.o \
 	$(OBJ)/player.o \
 	$(OBJ)/scene.o \
-	$(OBJ)/blocks.o \
-	$(OBJ)/parse-blocks.o
+	$(OBJ)/blocs.o \
+	$(OBJ)/parse-blocs.o
 
 Game: clear_app \
 	$(BIN)/game

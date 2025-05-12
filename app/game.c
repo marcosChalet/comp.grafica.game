@@ -1,7 +1,8 @@
-#include "blocks.h"
-#include "parse-blocks.h"
+#include "blocs.h"
+#include "parse-blocs.h"
 #include "player.h"
 #include "scene.h"
+#include "stage-loader.h"
 
 #include <GL/glut.h>
 #include <math.h>
@@ -12,7 +13,8 @@ Player player;
 void init() {
   glClearColor(0.75f, 0.75f, 1.0f, 1.0f);
   init_player(0, 0, 0, &player);
-  // load_blocks_from_file("./3d-objects/blocks.conf", blocks);
+  load_stage("./3d-objects/stage-1.conf");
+  // load_blocs_from_file("./3d-objects/blocs.conf", blocs);
 }
 
 void display() {
@@ -31,6 +33,7 @@ void display() {
 
   glLoadIdentity();
   drawScene();
+  render_stage();
   glutSwapBuffers();
 }
 

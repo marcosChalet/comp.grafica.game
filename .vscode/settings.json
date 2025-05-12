@@ -12,7 +12,7 @@
     "player.h": "c",
     "glut.h": "c",
     "stdlib.h": "c",
-    "blocks.h": "c"
+    "blocs.h": "c"
   },
   "C_Cpp.errorSquiggles": "disabled"
 }

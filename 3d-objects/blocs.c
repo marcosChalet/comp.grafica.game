@@ -1,10 +1,10 @@
-#include "blocks.h"
+#include "blocs.h"
 
 #include <GL/glut.h>
 #include <stdio.h>
 #include <stdlib.h>
 
-void draw_block(BlockBasic *b) {
+void draw_bloc(BlocBasic *b) {
   glPushMatrix();
 
   GLfloat mat_amb_diff[] = {1.0, 1.0, 1.0, 1.0};
@@ -21,7 +21,7 @@ void draw_block(BlockBasic *b) {
   glPopMatrix();
 }
 
-void draw_moving_block(MovingBlock *mv) {
+void draw_moving_bloc(MovingBloc *mv) {
   glPushMatrix();
 
   GLfloat mat_amb_diff[] = {1.0, 1.0, 1.0, 1.0};
@@ -39,47 +39,45 @@ void draw_moving_block(MovingBlock *mv) {
   glPopMatrix();
 }
 
-BlockBasic *create_block(BlockBasic block) {
-  BlockBasic *new_block = (BlockBasic *)malloc(sizeof(BlockBasic));
+BlocBasic *create_bloc(BlocBasic bloc) {
+  BlocBasic *new_bloc = (BlocBasic *)malloc(sizeof(BlocBasic));
 
-  new_block->x = block.x;
-  new_block->y = block.y;
-  new_block->z = block.z;
-  new_block->draw = &draw_block;
-  new_block->size = block.size;
-  new_block->block_type = block.block_type;
-  new_block->behavior_type = block.behavior_type;
-  new_block->update_behavior = block.update_behavior;
+  new_bloc->x = bloc.x;
+  new_bloc->y = bloc.y;
+  new_bloc->z = bloc.z;
+  new_bloc->size = bloc.size;
+  new_bloc->bloc_type = bloc.bloc_type;
+  new_bloc->behavior_type = bloc.behavior_type;
+  new_bloc->update_behavior = bloc.update_behavior;
 
-  return new_block;
+  return new_bloc;
 }
 
-void destroy_block_basic(BlockBasic *b) {
+void destroy_bloc_basic(BlocBasic *b) {
   free(b);
 }
 
-MovingBlock *create_moving_block(MovingBlock mv) {
-  MovingBlock *new_block = (MovingBlock *)malloc(sizeof(MovingBlock));
+MovingBloc *create_moving_bloc(MovingBloc mv) {
+  MovingBloc *new_bloc = (MovingBloc *)malloc(sizeof(MovingBloc));
 
-  new_block->x = mv.x;
-  new_block->y = mv.y;
-  new_block->z = mv.z;
-  new_block->size = mv.size;
-  new_block->draw = &draw_moving_block;
-  new_block->block_type = mv.block_type;
-  new_block->behavior_type = mv.behavior_type;
-  new_block->update_behavior = mv.update_behavior;
-  new_block->amplitude = mv.amplitude;
-  new_block->speed = mv.speed;
+  new_bloc->x = mv.x;
+  new_bloc->y = mv.y;
+  new_bloc->z = mv.z;
+  new_bloc->size = mv.size;
+  new_bloc->bloc_type = mv.bloc_type;
+  new_bloc->behavior_type = mv.behavior_type;
+  new_bloc->update_behavior = mv.update_behavior;
+  new_bloc->amplitude = mv.amplitude;
+  new_bloc->speed = mv.speed;
 
-  return new_block;
+  return new_bloc;
 }
 
-void destroy_moving_block(MovingBlock *mb) {
+void destroy_moving_bloc(MovingBloc *mb) {
   free(mb);
 }
 
-void print_block(BlockBasic *b) {
+void print_bloc(BlocBasic *b) {
   if (!b) {
     printf("Bloco nulo.\n");
     return;
@@ -87,11 +85,11 @@ void print_block(BlockBasic *b) {
 
   printf("Posição: (%.2f, %.2f, %.2f)\n", b->x, b->y, b->z);
 
-  switch (b->block_type) {
-  case BLOCK_T_INVISIBLE:
+  switch (b->bloc_type) {
+  case BLOC_T_INVISIBLE:
     printf("Tipo de bloco: INVISÍVEL\n");
     break;
-  case BLOCK_T_GRASS:
+  case BLOC_T_GRASS:
     printf("Tipo de bloco: GRAMA\n");
     break;
   default:
@@ -99,17 +97,17 @@ void print_block(BlockBasic *b) {
   }
 
   switch (b->behavior_type) {
-  case BLOCK_T_SPAWN:
+  case BLOC_T_SPAWN:
     printf("Comportamento: SPAWN\n");
     break;
-  case BLOCK_T_NONE:
+  case BLOC_T_NONE:
     printf("Comportamento: NENHUM\n");
     break;
-  case BLOCK_T_MOVING:
+  case BLOC_T_MOVING:
     printf("Comportamento: MÓVEL\n");
-    // Cast para MovingBlock
+    // Cast para MovingBloc
     {
-      MovingBlock *mb = (MovingBlock *)b;
+      MovingBloc *mb = (MovingBloc *)b;
       printf("  Velocidade: %.2f\n", mb->speed);
       printf("  Amplitude: %.2f\n", mb->amplitude);
     }
@@ -121,5 +119,5 @@ void print_block(BlockBasic *b) {
   printf("\n");
 }
 
-void update_block_moving_behavior(void *block) {};
-void update_block_rotating_behavior(void *block) {};
+void update_bloc_moving_behavior(void *bloc) {};
+void update_bloc_rotating_behavior(void *bloc) {};
