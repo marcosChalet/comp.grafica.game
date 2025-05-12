@@ -3,22 +3,12 @@
 #include <GL/glut.h>
 
 void drawScene() {
+
+  // scene sample
+
   updateCamera();
 
-  /**
-   * [Ideia do que fazer]
-   * Ir implementando o mapa corretamente. Criar templates dos
-   * elementos que irão aparecer no mapa, adicionar textura (no final),
-   * e chamar aqui fazendo uma translação para sua posição correta no
-   * mapa.
-   **/
-
-  // exemplo
   drawPlatform(6.0f, 0.0f, 0.0f, 4.0f, 0.2f, 3.0f);
-
-  /**
-   * mudar o cenário depois
-   */
 
   // chão
   glColor3f(0.5f, 0.5f, 0.5f);
