@@ -1,99 +1,106 @@
-#include <GL/glut.h>
+#include "player.h"
 #include <math.h>
+#include <stdbool.h>
 
-int isJumping = 0;
-float jumpVelocity = 0.0f;
-const float gravity = -0.01f;
-const float jumpStrength = 0.2f;
+Player *player_ptr;
 
 float yaw = -90.0f, pitch = 0.0f;
-float speed = 0.1f;
-float camX = 0.0f, camY = 0.0f, camZ = 5.0f;
-float dirX, dirY, dirZ;
+
+const float gravity = -0.01f;
+bool is_jumping = false;
+
 int keys[256] = {0};
 int events[256] = {0};
 
-void initCamera() {
-  dirX = cosf(yaw * (M_PI / 180.0f));
-  dirY = 0.0f;
-  dirZ = sinf(yaw * (M_PI / 180.0f));
+void init_player(float x, float y, float z, Player *player_ref) {
+  player_ptr = player_ref;
+
+  player_ptr->x = x;
+  player_ptr->y = y;
+  player_ptr->z = z;
+
+  player_ptr->speed = 0.1f;
+  player_ptr->isJumping = 0;
+  player_ptr->jumpStrength = 0.2f;
+  player_ptr->jumpVelocity = 0.0f;
+  player_ptr->sensibility = 0.03f;
+  player_ptr->groundLevel = player_ptr->y;
+
+  player_ptr->gazeDirectionX = cosf(yaw * (M_PI / 180.0f));
+  player_ptr->gazeDirectionY = 0.0f;
+  player_ptr->gazeDirectionZ = sinf(yaw * (M_PI / 180.0f));
 }
 
-void updateCamera() {
-  float lookX = camX + dirX;
-  float lookY = camY + dirY;
-  float lookZ = camZ + dirZ;
-
-  gluLookAt(camX, camY, camZ, lookX, lookY, lookZ, 0.0f, 1.0f, 0.0f);
+void update_player_sensibility(float sensibility) {
+  player_ptr->sensibility = sensibility;
 }
 
-void updatePosition() {
+void update_player_position() {
+  GLdouble centerX = player_ptr->x + player_ptr->gazeDirectionX;
+  GLdouble centerY = player_ptr->y + player_ptr->gazeDirectionY;
+  GLdouble centerZ = player_ptr->z + player_ptr->gazeDirectionZ;
+
+  gluLookAt(player_ptr->x, player_ptr->y, player_ptr->z, centerX, centerY, centerZ, 0.0f, 1.0f,
+            0.0f);
+}
+
+void move_player() {
   float moveX = 0, moveZ = 0;
 
   if (keys['w']) {
-    moveX += dirX;
-    moveZ += dirZ;
+    moveX += player_ptr->gazeDirectionX;
+    moveZ += player_ptr->gazeDirectionZ;
   }
   if (keys['s']) {
-    moveX -= dirX;
-    moveZ -= dirZ;
+    moveX -= player_ptr->gazeDirectionX;
+    moveZ -= player_ptr->gazeDirectionZ;
   }
   if (keys['a']) {
-    moveX += dirZ;
-    moveZ -= dirX;
+    moveX += player_ptr->gazeDirectionZ;
+    moveZ -= player_ptr->gazeDirectionX;
   }
   if (keys['d']) {
-    moveX -= dirZ;
-    moveZ += dirX;
+    moveX -= player_ptr->gazeDirectionZ;
+    moveZ += player_ptr->gazeDirectionX;
   }
 
-  camX += moveX * speed;
-  camZ += moveZ * speed;
+  if (keys[' '] && !player_ptr->isJumping) {
+    player_ptr->jumpVelocity = player_ptr->jumpStrength;
+    player_ptr->isJumping = true;
+  }
 
-  if (isJumping) {
-    camY += jumpVelocity;
-    jumpVelocity += gravity;
+  player_ptr->x += moveX * player_ptr->speed;
+  player_ptr->z += moveZ * player_ptr->speed;
 
-    if (camY <= 0.0f) {
-      camY = 0.0f;
-      isJumping = 0;
-      jumpVelocity = 0.0f;
+  if (player_ptr->isJumping) {
+    player_ptr->y += player_ptr->jumpVelocity;
+    player_ptr->jumpVelocity += gravity;
+
+    if (player_ptr->y <= player_ptr->groundLevel) {
+      player_ptr->y = player_ptr->groundLevel;
+      player_ptr->isJumping = false;
+      player_ptr->jumpVelocity = 0.0f;
     }
   }
 }
 
-void processKeyboard(unsigned char key, int isPressed) {
+void change_position_direction(unsigned char key, int isPressed) {
   keys[key] = isPressed;
-
-  // Inicia o pulo ao pressionar espaço (e apenas se estiver no chão)
-  if (key == ' ' && isPressed && !isJumping && camY <= 0.0f) {
-    isJumping = 1;
-    jumpVelocity = jumpStrength;
-  }
 }
 
-void processMouse(float offsetX, float offsetY) {
-  yaw += offsetX;
-  pitch += offsetY;
+void change_look_direction(float offsetX, float offsetY) {
+  yaw += offsetX * player_ptr->sensibility;
+  pitch += offsetY * player_ptr->sensibility;
 
   if (pitch > 80.0f)
     pitch = 80.0f;
-  if (pitch < -15.0f)
-    pitch = -15.0f;
+  if (pitch < -25.0f)
+    pitch = -25.0f;
 
   float radYaw = yaw * (M_PI / 180.0f);
   float radPitch = pitch * (M_PI / 180.0f);
 
-  dirX = cosf(radYaw) * cosf(radPitch);
-  dirY = sinf(radPitch);
-  dirZ = sinf(radYaw) * cosf(radPitch);
-}
-
-void drawPlayer() {
-  glPushMatrix();
-  glLoadIdentity();
-  glTranslatef(0.0f, -0.5f, -1.0f);
-  glColor3f(1.0f, 1.0f, 0.0f);
-  glutSolidCube(0.2);
-  glPopMatrix();
+  player_ptr->gazeDirectionX = cosf(radYaw) * cosf(radPitch);
+  player_ptr->gazeDirectionY = sinf(radPitch);
+  player_ptr->gazeDirectionZ = sinf(radYaw) * cosf(radPitch);
 }

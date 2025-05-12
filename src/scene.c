@@ -6,7 +6,7 @@ void drawScene() {
 
   // scene sample
 
-  updateCamera();
+  update_player_position();
 
   drawPlatform(6.0f, 0.0f, 0.0f, 4.0f, 0.2f, 3.0f);
 
@@ -42,6 +42,4 @@ void drawScene() {
   glColor3f(0.2f, 0.8f, 0.2f);
   glutSolidCube(1.0);
   glPopMatrix();
-
-  drawPlayer();
 }

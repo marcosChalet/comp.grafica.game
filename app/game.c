@@ -5,13 +5,11 @@
 #include <math.h>
 #include <stdio.h>
 
-int lastMouseX, lastMouseY;
-int firstMouse = 1;
-int ignoreWarp = 0;
+Player player;
 
 void init() {
   glClearColor(0.75f, 0.75f, 1.0f, 1.0f);
-  initCamera();
+  init_player(0, 0, 0, &player);
 }
 
 void display() {
@@ -34,45 +32,35 @@ void display() {
 }
 
 void keyboard(unsigned char key, int x, int y) {
-  processKeyboard(key, 1);
+  change_position_direction(key, 1);
 }
 
 void keyboardUp(unsigned char key, int x, int y) {
-  processKeyboard(key, 0);
+  change_position_direction(key, 0);
 }
 
 void passiveMotion(int x, int y) {
   int windowWidth = glutGet(GLUT_WINDOW_WIDTH);
   int windowHeight = glutGet(GLUT_WINDOW_HEIGHT);
-  int centerX = windowWidth / 2;
-  int centerY = windowHeight / 2;
+  float center_x = windowWidth / 2;
+  float center_y = windowHeight / 2;
+  static int ignore_warp = 0;
 
-  if (ignoreWarp) {
-    ignoreWarp = 0;
+  if (ignore_warp) {
+    ignore_warp = 0;
     return;
   }
 
-  if (firstMouse) {
-    lastMouseX = centerX;
-    lastMouseY = centerY;
-    firstMouse = 0;
-    ignoreWarp = 1;
-    glutWarpPointer(centerX, centerY);
-    return;
-  }
+  float delta_x = x - center_x;
+  float delta_y = center_y - y;
+  change_look_direction(delta_x, delta_y);
 
-  int deltaX = x - centerX;
-  int deltaY = centerY - y;
-
-  float sensitivity = 0.08f;
-  processMouse(deltaX * sensitivity, deltaY * sensitivity);
-
-  ignoreWarp = 1;
-  glutWarpPointer(centerX, centerY);
+  ignore_warp = 1;
+  glutWarpPointer(center_x, center_y);
 }
 
 void timer(int value) {
-  updatePosition();
+  move_player();
   glutPostRedisplay();
   glutTimerFunc(16, timer, 0);
 }
