@@ -17,13 +17,14 @@ typedef enum block_type {
 
 #define BLOCK_BASE                                                                                 \
   float x, y, z;                                                                                   \
+  float size;                                                                                      \
   void (*update_behavior)(void *);                                                                 \
   BlockBehaviorType behavior_type;                                                                 \
   BlockTypeEnum block_type;
 
 typedef struct block {
   BLOCK_BASE
-  void (*draw)(void *);
+  void (*draw)(struct block *);
 } BlockBasic;
 
 typedef struct moving_block {
@@ -32,7 +33,7 @@ typedef struct moving_block {
   bool is_backing;
   float speed;
   float amplitude;
-  void (*draw)(void *);
+  void (*draw)(struct moving_block *);
 } MovingBlock;
 
 BlockBasic *create_block(BlockBasic);

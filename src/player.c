@@ -19,9 +19,9 @@ void init_player(float x, float y, float z, Player *player_ref) {
   player_ptr->y = y;
   player_ptr->z = z;
 
-  player_ptr->speed = 0.1f;
+  player_ptr->speed = 0.07f;
   player_ptr->isJumping = 0;
-  player_ptr->jumpStrength = 0.2f;
+  player_ptr->jumpStrength = 0.15f;
   player_ptr->jumpVelocity = 0.0f;
   player_ptr->sensibility = 0.03f;
   player_ptr->groundLevel = player_ptr->y;
