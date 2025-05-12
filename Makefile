@@ -23,6 +23,8 @@ libsGame: \
 	$(OBJ)/player.o \
 	$(OBJ)/scene.o \
 	$(OBJ)/blocks.o \
+	${OBJ}/global.o \
+	$(OBJ)/block-list.o \
 	$(OBJ)/parse-blocks.o
 
 Game: clear_app \

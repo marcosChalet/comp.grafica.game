@@ -1,4 +1,5 @@
 #include "blocks.h"
+#include "global.h"
 #include "parse-blocks.h"
 #include "player.h"
 #include "scene.h"
