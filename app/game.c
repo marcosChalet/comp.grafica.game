@@ -1,6 +1,8 @@
+#include "blocks.h"
 #include "parse-blocks.h"
 #include "player.h"
 #include "scene.h"
+
 #include <GL/glut.h>
 #include <math.h>
 #include <stdio.h>
@@ -10,6 +12,7 @@ Player player;
 void init() {
   glClearColor(0.75f, 0.75f, 1.0f, 1.0f);
   init_player(0, 0, 0, &player);
+  // load_blocks_from_file("./3d-objects/blocks.conf", blocks);
 }
 
 void display() {
@@ -95,8 +98,6 @@ int main(int argc, char **argv) {
   glutSetCursor(GLUT_CURSOR_NONE);
   init();
   glutMainLoop();
-
-  load_blocks_from_file("./3d-objects/blocks.conf");
 
   return 0;
 }

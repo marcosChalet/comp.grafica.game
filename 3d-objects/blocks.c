@@ -1,7 +1,43 @@
 #include "blocks.h"
 
+#include <GL/glut.h>
 #include <stdio.h>
 #include <stdlib.h>
+
+void draw_block(BlockBasic *b) {
+  glPushMatrix();
+
+  GLfloat mat_amb_diff[] = {1.0, 1.0, 1.0, 1.0};
+  GLfloat mat_specular[] = {0.0, 0.0, 0.0, 1.0};
+  GLfloat mat_shininess[] = {0.0};
+
+  glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mat_amb_diff);
+  glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
+  glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
+
+  glColor3f(0.2, 0.9, 0.2);
+  glTranslatef((b->x + b->size) / 2 - 0.5, (b->y + b->size) / 2 - 1.1, (b->z + b->size) / 2 - 1.1);
+  glutSolidCube(b->size / 1.5);
+  glPopMatrix();
+}
+
+void draw_moving_block(MovingBlock *mv) {
+  glPushMatrix();
+
+  GLfloat mat_amb_diff[] = {1.0, 1.0, 1.0, 1.0};
+  GLfloat mat_specular[] = {0.0, 0.0, 0.0, 1.0};
+  GLfloat mat_shininess[] = {0.0};
+
+  glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mat_amb_diff);
+  glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
+  glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
+
+  glColor3f(0.2, 0.9, 0.2);
+  glTranslatef((mv->x + mv->size) / 2 - 0.5, (mv->y + mv->size) / 2 - 1.1,
+               (mv->z + mv->size) / 2 - 1.1);
+  glutSolidCube(mv->size / 1.5);
+  glPopMatrix();
+}
 
 BlockBasic *create_block(BlockBasic block) {
   BlockBasic *new_block = (BlockBasic *)malloc(sizeof(BlockBasic));
@@ -9,6 +45,8 @@ BlockBasic *create_block(BlockBasic block) {
   new_block->x = block.x;
   new_block->y = block.y;
   new_block->z = block.z;
+  new_block->draw = &draw_block;
+  new_block->size = block.size;
   new_block->block_type = block.block_type;
   new_block->behavior_type = block.behavior_type;
   new_block->update_behavior = block.update_behavior;
@@ -26,6 +64,8 @@ MovingBlock *create_moving_block(MovingBlock mv) {
   new_block->x = mv.x;
   new_block->y = mv.y;
   new_block->z = mv.z;
+  new_block->size = mv.size;
+  new_block->draw = &draw_moving_block;
   new_block->block_type = mv.block_type;
   new_block->behavior_type = mv.behavior_type;
   new_block->update_behavior = mv.update_behavior;

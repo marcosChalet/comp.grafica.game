@@ -23,7 +23,8 @@ BlockTypeEnum parse_block_type(const char *str) {
   return -1;
 }
 
-void load_blocks_from_file(const char *filename) {
+void load_blocks_from_file(const char *filename, void **blocks) {
+  int num_blocks = 0;
   FILE *file = fopen(filename, "r");
   if (!file) {
     perror("Erro ao abrir arquivo");
@@ -36,6 +37,7 @@ void load_blocks_from_file(const char *filename) {
     char behavior_str[64], type_str[64];
     float speed = 0, amplitude = 0;
     int is_moving = 0;
+    float size;
 
     sscanf(line, "%f %f %f %s %s", &x, &y, &z, behavior_str, type_str);
 
@@ -44,17 +46,21 @@ void load_blocks_from_file(const char *filename) {
 
     if (behavior == BLOCK_T_MOVING) {
       is_moving = 1;
+      char *size_str = strstr(line, "size=");
       char *speed_str = strstr(line, "speed=");
       char *amp_str = strstr(line, "amplitude=");
 
+      if (size_str)
+        size = atof(size_str + 5);
       if (speed_str)
         speed = atof(speed_str + 6);
       if (amp_str)
-        amplitude = atof(amp_str + 9);
+        amplitude = atof(amp_str + 10);
 
       MovingBlock temp = {.x = x,
                           .y = y,
                           .z = z,
+                          .size = size,
                           .update_behavior = &update_block_moving_behavior,
                           .behavior_type = behavior,
                           .block_type = block_type,
@@ -62,17 +68,25 @@ void load_blocks_from_file(const char *filename) {
                           .amplitude = amplitude};
 
       MovingBlock *mb = create_moving_block(temp);
+      blocks[num_blocks++] = (void *)mb;
       print_block((BlockBasic *)mb); // imprime para debug
 
     } else {
+      char *size_str = strstr(line, "size=");
+
+      if (size_str)
+        size = atof(size_str + 5);
+
       BlockBasic temp = {.x = x,
                          .y = y,
                          .z = z,
+                         .size = size,
                          .update_behavior = NULL,
                          .behavior_type = behavior,
                          .block_type = block_type};
 
       BlockBasic *b = create_block(temp);
+      blocks[num_blocks++] = (void *)b;
       print_block(b); // imprime para debug
     }
   }
