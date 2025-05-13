@@ -12,13 +12,24 @@ GlobalData *create_global_data() {
     exit(EXIT_FAILURE);
   }
 
+  printf("creating block list\n");
   data->block_list = create_block_list();
+  printf("creating player\n");
+  data->player = create_player();
+
+  printf("global data object created\n");
 
   return data;
 }
 
 GlobalData *get_global_obj() {
   return global_data;
+}
+
+Player *get_global_player() {
+  if (global_data)
+    return global_data->player;
+  return NULL;
 }
 
 void init_global_data() {

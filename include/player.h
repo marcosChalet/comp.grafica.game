@@ -18,6 +18,7 @@ typedef struct player {
   float speed;
 } Player;
 
+Player *create_player();
 void move_player();
 void change_position_direction(unsigned char key, int isPressed);
 void init_player(float x, float y, float z, Player *player_ref);

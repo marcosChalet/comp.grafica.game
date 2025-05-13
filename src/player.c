@@ -1,6 +1,7 @@
 #include "player.h"
 #include <math.h>
 #include <stdbool.h>
+#include <stdio.h>
 
 Player *player_ptr;
 
@@ -11,12 +12,12 @@ bool is_jumping = false;
 
 int keys[256] = {0};
 
-void init_player(float x, float y, float z, Player *player_ref) {
-  player_ptr = player_ref;
+Player *create_player() {
+  Player *player_ptr = (Player *)malloc(sizeof(Player));
 
-  player_ptr->x = x;
-  player_ptr->y = y;
-  player_ptr->z = z;
+  player_ptr->x = 0;
+  player_ptr->y = 0;
+  player_ptr->z = 0;
 
   player_ptr->speed = 0.015f;
   player_ptr->isJumping = 0;
@@ -28,6 +29,16 @@ void init_player(float x, float y, float z, Player *player_ref) {
   player_ptr->gazeDirectionX = cosf(yaw * (M_PI / 180.0f));
   player_ptr->gazeDirectionY = 0.0f;
   player_ptr->gazeDirectionZ = sinf(yaw * (M_PI / 180.0f));
+
+  return player_ptr;
+}
+
+void init_player(float x, float y, float z, Player *player_ref) {
+  player_ptr = player_ref;
+
+  player_ptr->x = x;
+  player_ptr->y = y;
+  player_ptr->z = z;
 }
 
 void update_player_sensibility(float sensibility) {
