@@ -11,6 +11,7 @@ typedef struct player {
   GLdouble gazeDirectionY;
   GLdouble gazeDirectionZ;
   GLdouble groundLevel;
+  float yaw, pitch;
   float sensibility;
   float jumpVelocity;
   float jumpStrength;

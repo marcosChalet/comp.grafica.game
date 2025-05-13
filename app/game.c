@@ -4,38 +4,32 @@
 #include "player.h"
 #include "scene.h"
 #include "stage-loader.h"
+#include "sun.h"
 
 #include <GL/glut.h>
 #include <math.h>
 #include <stdio.h>
 
-Player player;
+Player *player;
 
 void init() {
   glClearColor(0.529f, 0.808f, 0.922f, 1.0);
   printf("initializing global stage\n");
   init_global_data();
+  player = get_global_player();
   printf("loading stage\n");
   load_stage("./3d-objects/stage-1.conf");
+  sun_light_init();
 }
 
 void display() {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-  // atualizar blockos
-  //  as peculiaridades de cada um e registra ações no player na fila de evento
-  // atuliazar fisica
-  //  registra em uma fila de eventos
-  //    gravidade
-  //    colisão
-  //    talvez deslizar
-  // atualizar player
-  //   processa eventos de input
-  //    mouse e teclado e registra na fila
-
   glLoadIdentity();
+
   drawScene();
   render_stage();
+  render_sun();
+
   glutSwapBuffers();
 }
 
@@ -78,30 +72,33 @@ int main(int argc, char **argv) {
   glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
 
   glutInitWindowSize(1920, 1080);
-  glutCreateWindow("Jogo em 3D - Primeira Pessoa");
+  glutCreateWindow("Minecraft - Parkour");
   glutFullScreen();
 
   glEnable(GL_DEPTH_TEST);
+  glEnable(GL_CULL_FACE);
+  glCullFace(GL_BACK);
+  glFrontFace(GL_CCW);
 
   int w = glutGet(GLUT_WINDOW_WIDTH);
   int h = glutGet(GLUT_WINDOW_HEIGHT);
   glViewport(0, 0, w, h);
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
-  gluPerspective(60.0, (float)w / (float)h, 0.1, 100.0);
+  gluPerspective(60.0, (float)w / (float)h, 0.1, 20000.0);
   glMatrixMode(GL_MODELVIEW);
 
   glutDisplayFunc(display);
-
   glutKeyboardFunc(keyboard);
   glutKeyboardUpFunc(keyboardUp);
   glutPassiveMotionFunc(passiveMotion);
   glutMotionFunc(passiveMotion);
-
   glutTimerFunc(0, timer, 0);
 
   glutSetCursor(GLUT_CURSOR_NONE);
+
   init();
+
   glutMainLoop();
 
   return 0;
