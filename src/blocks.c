@@ -4,6 +4,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define MAX_MOVING_BLOCK_Y 0.8f
+#define MIN_MOVING_BLOCK_Y 0.5f
+
 void draw_block(BlockBasic *b) {
   glPushMatrix();
 
@@ -23,8 +26,31 @@ void draw_block(BlockBasic *b) {
   glPopMatrix();
 }
 
+void update_block_moving_behavior(MovingBlock *block) {
+  float max_y = block->start_position_y + MAX_MOVING_BLOCK_Y;
+  float min_y = block->start_position_y - MIN_MOVING_BLOCK_Y;
+
+  if (block->y - block->start_position_y >= max_y) {
+    block->is_backing = true;
+  }
+
+  if (block->y - block->start_position_y <= min_y) {
+    block->is_backing = false;
+  }
+
+  if (!block->is_backing) {
+    block->y += block->speed;
+  }
+
+  if (block->is_backing) {
+    block->y -= block->speed;
+  }
+};
+
 void draw_moving_block(MovingBlock *mv) {
   glPushMatrix();
+
+  update_block_moving_behavior(mv);
 
   GLfloat ka[] = {1.0, 1.0, 1.0, 1.0};
   GLfloat kd[] = {1.0, 1.0, 1.0, 1.0};
@@ -51,7 +77,6 @@ BlockBasic *create_block(BlockBasic block) {
   new_block->size = block.size;
   new_block->block_type = block.block_type;
   new_block->behavior_type = block.behavior_type;
-  new_block->update_behavior = block.update_behavior;
   new_block->relative_collision_box = block.relative_collision_box;
 
   return new_block;
@@ -70,10 +95,11 @@ MovingBlock *create_moving_block(MovingBlock mv) {
   new_block->size = mv.size;
   new_block->block_type = mv.block_type;
   new_block->behavior_type = mv.behavior_type;
-  new_block->update_behavior = mv.update_behavior;
   new_block->amplitude = mv.amplitude;
   new_block->speed = mv.speed;
   new_block->relative_collision_box = mv.relative_collision_box;
+  new_block->is_backing = false;
+  new_block->start_position_y = mv.y;
 
   return new_block;
 }
@@ -124,5 +150,4 @@ void print_block(BlockBasic *b) {
   printf("\n");
 }
 
-void update_block_moving_behavior(void *block) {};
 void update_block_rotating_behavior(void *block) {};
