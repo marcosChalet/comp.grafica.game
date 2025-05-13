@@ -1,6 +1,7 @@
 #ifndef BLOCKS_H
 #define BLOCKS_H
 
+#include "collision-boxes.h"
 #include <stdbool.h>
 
 typedef enum block_behavior_type {
@@ -18,6 +19,7 @@ typedef enum block_type {
   float x, y, z;                                                                                   \
   float size;                                                                                      \
   void (*update_behavior)(void *);                                                                 \
+  RelativeCollisionBox *relative_collision_box;                                                    \
   BlockBehaviorType behavior_type;                                                                 \
   BlockTypeEnum block_type;
 

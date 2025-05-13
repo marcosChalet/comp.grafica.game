@@ -1,6 +1,7 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
+#include "collision-boxes.h"
 #include <GL/glut.h>
 
 typedef struct player {
@@ -11,6 +12,7 @@ typedef struct player {
   GLdouble gazeDirectionY;
   GLdouble gazeDirectionZ;
   GLdouble groundLevel;
+  RelativeCollisionBox *relative_collision_box;
   float yaw, pitch;
   float sensibility;
   float jumpVelocity;
@@ -21,6 +23,7 @@ typedef struct player {
 
 Player *create_player();
 void move_player();
+void is_player_colliding();
 void change_position_direction(unsigned char key, int isPressed);
 void init_player(float x, float y, float z, Player *player_ref);
 void change_look_direction(float offsetX, float offsetY);
