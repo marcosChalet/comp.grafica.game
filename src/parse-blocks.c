@@ -62,7 +62,6 @@ void load_blocks_from_file(const char *filename) {
                           .y = y,
                           .z = z,
                           .size = size,
-                          .update_behavior = &update_block_moving_behavior,
                           .behavior_type = behavior,
                           .block_type = block_type,
                           .speed = speed,
@@ -84,7 +83,6 @@ void load_blocks_from_file(const char *filename) {
                          .y = y,
                          .z = z,
                          .size = size,
-                         .update_behavior = NULL,
                          .behavior_type = behavior,
                          .block_type = block_type};
 

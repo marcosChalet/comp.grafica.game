@@ -17,7 +17,6 @@ typedef enum block_type {
 #define BLOCK_BASE                                                                                 \
   float x, y, z;                                                                                   \
   float size;                                                                                      \
-  void (*update_behavior)(void *);                                                                 \
   BlockBehaviorType behavior_type;                                                                 \
   BlockTypeEnum block_type;
 
@@ -27,7 +26,7 @@ typedef struct block {
 
 typedef struct moving_block {
   BLOCK_BASE
-  float start_position_z;
+  float start_position_y;
   bool is_backing;
   float speed;
   float amplitude;
@@ -45,7 +44,6 @@ void draw_block(BlockBasic *b);
 void draw_moving_block(MovingBlock *mv);
 
 // Behavior functions
-void update_block_moving_behavior(void *);
 void update_block_rotating_behavior(void *);
 
 #endif
