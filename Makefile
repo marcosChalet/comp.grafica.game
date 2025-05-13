@@ -19,18 +19,20 @@ endif
 all: libsGame Game
 
 libsGame: \
+	$(OBJ)/collision-boxes.o \
 	$(OBJ)/import-object.o \
 	$(OBJ)/stage-loader.o \
 	$(OBJ)/parse-blocks.o \
 	$(OBJ)/mesh-loader.o \
 	$(OBJ)/block-list.o \
 	$(OBJ)/platform.o \
+	$(OBJ)/routines.o \
 	$(OBJ)/player.o \
 	${OBJ}/global.o \
-	$(OBJ)/scene.o \
 	$(OBJ)/blocks.o \
-	$(OBJ)/collision-boxes.o \
-	$(OBJ)/routines.o 
+	$(OBJ)/blocks.o \
+	$(OBJ)/scene.o \
+	$(OBJ)/sun.o
 	
 Game: clear_app \
 	$(BIN)/game

@@ -1,6 +1,8 @@
 #ifndef COLLISION_BOXES_H
 #define COLLISION_BOXES_H
 
+#include <stdbool.h>
+
 typedef struct relative_collision_box {
   float width;
   float height;
