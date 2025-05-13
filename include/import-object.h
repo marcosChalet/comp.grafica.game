@@ -7,7 +7,7 @@ typedef struct imported_object {
   Mesh mesh;
 } ImportedObject;
 
-ImportedObject *import_object();
+ImportedObject *import_object(char *path);
 void draw_imported_object(ImportedObject *object, float x, float y, float z, float scale_size);
 
 #endif
