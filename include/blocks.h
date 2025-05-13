@@ -7,7 +7,6 @@ typedef enum block_behavior_type {
   BLOCK_T_SPAWN,
   BLOCK_T_NONE,
   BLOCK_T_MOVING,
-  // BLOCK_T_ROTATING,
 } BlockBehaviorType;
 
 typedef enum block_type {
@@ -24,7 +23,6 @@ typedef enum block_type {
 
 typedef struct block {
   BLOCK_BASE
-  void (*draw)(struct block *);
 } BlockBasic;
 
 typedef struct moving_block {
@@ -33,7 +31,6 @@ typedef struct moving_block {
   bool is_backing;
   float speed;
   float amplitude;
-  void (*draw)(struct moving_block *);
 } MovingBlock;
 
 BlockBasic *create_block(BlockBasic);
@@ -43,6 +40,9 @@ MovingBlock *create_moving_block(MovingBlock);
 void destroy_moving_block(MovingBlock *);
 
 void print_block(BlockBasic *b);
+
+void draw_block(BlockBasic *b);
+void draw_moving_block(MovingBlock *mv);
 
 // Behavior functions
 void update_block_moving_behavior(void *);

@@ -7,35 +7,38 @@
 void draw_block(BlockBasic *b) {
   glPushMatrix();
 
-  GLfloat mat_amb_diff[] = {1.0, 1.0, 1.0, 1.0};
-  GLfloat mat_specular[] = {0.0, 0.0, 0.0, 1.0};
-  GLfloat mat_shininess[] = {0.0};
+  GLfloat ka[] = {1.0, 1.0, 1.0, 1.0};
+  GLfloat kd[] = {1.0, 1.0, 1.0, 1.0};
+  GLfloat ks[] = {0.0, 0.0, 0.0, 1.0};
+  GLfloat ns = 64.0f;
 
-  glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mat_amb_diff);
-  glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
-  glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
+  glMaterialfv(GL_FRONT, GL_AMBIENT, ka);
+  glMaterialfv(GL_FRONT, GL_DIFFUSE, kd);
+  glMaterialfv(GL_FRONT, GL_SPECULAR, ks);
+  glMaterialf(GL_FRONT, GL_SHININESS, ns);
 
-  glColor3f(0.2, 0.9, 0.2);
-  glTranslatef((b->x + b->size) / 2 - 0.5, (b->y + b->size) / 2 - 1.1, (b->z + b->size) / 2 - 1.1);
-  glutSolidCube(b->size / 1.5);
+  // glColor3f(0.2, 0.9, 0.2);
+  glTranslatef(b->x, b->y, b->z);
+  glutSolidCube(b->size);
   glPopMatrix();
 }
 
 void draw_moving_block(MovingBlock *mv) {
   glPushMatrix();
 
-  GLfloat mat_amb_diff[] = {1.0, 1.0, 1.0, 1.0};
-  GLfloat mat_specular[] = {0.0, 0.0, 0.0, 1.0};
-  GLfloat mat_shininess[] = {0.0};
+  GLfloat ka[] = {1.0, 1.0, 1.0, 1.0};
+  GLfloat kd[] = {1.0, 1.0, 1.0, 1.0};
+  GLfloat ks[] = {0.0, 0.0, 0.0, 1.0};
+  GLfloat ns = 64.0f;
 
-  glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mat_amb_diff);
-  glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
-  glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
+  glMaterialfv(GL_FRONT, GL_AMBIENT, ka);
+  glMaterialfv(GL_FRONT, GL_DIFFUSE, kd);
+  glMaterialfv(GL_FRONT, GL_SPECULAR, ks);
+  glMaterialf(GL_FRONT, GL_SHININESS, ns);
 
-  glColor3f(0.2, 0.9, 0.2);
-  glTranslatef((mv->x + mv->size) / 2 - 0.5, (mv->y + mv->size) / 2 - 1.1,
-               (mv->z + mv->size) / 2 - 1.1);
-  glutSolidCube(mv->size / 1.5);
+  // glColor3f(0.2, 0.9, 0.2);
+  glTranslatef(mv->x, mv->y, mv->z);
+  glutSolidCube(mv->size);
   glPopMatrix();
 }
 
@@ -45,7 +48,6 @@ BlockBasic *create_block(BlockBasic block) {
   new_block->x = block.x;
   new_block->y = block.y;
   new_block->z = block.z;
-  new_block->draw = &draw_block;
   new_block->size = block.size;
   new_block->block_type = block.block_type;
   new_block->behavior_type = block.behavior_type;
@@ -65,7 +67,6 @@ MovingBlock *create_moving_block(MovingBlock mv) {
   new_block->y = mv.y;
   new_block->z = mv.z;
   new_block->size = mv.size;
-  new_block->draw = &draw_moving_block;
   new_block->block_type = mv.block_type;
   new_block->behavior_type = mv.behavior_type;
   new_block->update_behavior = mv.update_behavior;
@@ -81,7 +82,7 @@ void destroy_moving_block(MovingBlock *mb) {
 
 void print_block(BlockBasic *b) {
   if (!b) {
-    printf("Bloco nulo.\n");
+    printf("Blocko nulo.\n");
     return;
   }
 
@@ -89,13 +90,13 @@ void print_block(BlockBasic *b) {
 
   switch (b->block_type) {
   case BLOCK_T_INVISIBLE:
-    printf("Tipo de bloco: INVISÍVEL\n");
+    printf("Tipo de blocko: INVISÍVEL\n");
     break;
   case BLOCK_T_GRASS:
-    printf("Tipo de bloco: GRAMA\n");
+    printf("Tipo de blocko: GRAMA\n");
     break;
   default:
-    printf("Tipo de bloco: DESCONHECIDO\n");
+    printf("Tipo de blocko: DESCONHECIDO\n");
   }
 
   switch (b->behavior_type) {

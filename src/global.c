@@ -25,8 +25,8 @@ void init_global_data() {
   global_data = create_global_data();
 }
 
-void addBlockToGlobalData(void *block) {
-  addBlockToList(global_data->block_list, block);
+void addBlockToGlobalData(void *block, BlockBehaviorType type) {
+  addBlockToList(global_data->block_list, block, type);
 }
 
 void destroy_global_data(GlobalData *data) {

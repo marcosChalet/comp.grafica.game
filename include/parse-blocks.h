@@ -1,6 +1,8 @@
-#ifndef PARSE_BLOCK
-#define PARSE_BLOCK
+#ifndef PARSE_BLOCKS
+#define PARSE_BLOCKS
 
-void load_blocks_from_file(const char *, void **);
+#include "blocks.h"
+
+void load_blocks_from_file(const char *filename);
 
 #endif

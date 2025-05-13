@@ -10,7 +10,7 @@ typedef struct global_data {
 GlobalData *create_global_data();
 GlobalData *get_global_obj();
 void init_global_data();
-void addBlockToGlobalData(void *);
+void addBlockToGlobalData(void *, BlockBehaviorType type);
 void destroy_global_data(GlobalData *);
 
 #endif

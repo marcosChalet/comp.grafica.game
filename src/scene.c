@@ -11,15 +11,15 @@ void drawScene() {
   // drawPlatform(6.0f, 0.0f, 0.0f, 4.0f, 0.2f, 3.0f);
 
   // chão
-  glColor3f(0.5f, 0.5f, 0.5f);
-  glBegin(GL_QUADS);
-  glVertex3f(-20.0f, -1.0f, 20.0f);
-  glVertex3f(20.0f, -1.0f, 20.0f);
-  glVertex3f(20.0f, -1.0f, -20.0f);
-  glVertex3f(-20.0f, -1.0f, -20.0f);
-  glEnd();
+  // glColor3f(0.5f, 0.5f, 0.5f);
+  // glBegin(GL_QUADS);
+  // glVertex3f(-3.0f, -0.1f, 3.0f);
+  // glVertex3f(3.0f, -0.1f, 3.0f);
+  // glVertex3f(3.0f, -0.1f, -3.0f);
+  // glVertex3f(-3.0f, -0.1f, -3.0f);
+  // glEnd();
 
-  // bloco 1
+  // blocko 1
   // glPushMatrix();
   // glTranslatef(0.0f, -1.5f + (2.0f / 2.0f), -5.0f); // y = -0.5
   // glScalef(2.0f, 2.0f, 2.0f);
@@ -27,7 +27,7 @@ void drawScene() {
   // glutSolidCube(1.0);
   // glPopMatrix();
 
-  // // bloco 2
+  // // blocko 2
   // glPushMatrix();
   // glTranslatef(3.0f, -1.5f + (2.5f / 2.0f), -8.0f); // y = -0.25
   // glScalef(2.5f, 2.5f, 2.5f);
@@ -35,7 +35,7 @@ void drawScene() {
   // glutSolidCube(1.0);
   // glPopMatrix();
 
-  // // bloco 3
+  // // blocko 3
   // glPushMatrix();
   // glTranslatef(-4.0f, -1.5f + (1.0f / 2.0f), -12.0f); // y = -1.0
   // glScalef(3.0f, 1.0f, 3.0f);

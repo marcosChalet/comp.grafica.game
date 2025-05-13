@@ -17,12 +17,12 @@ BlockList *create_block_list() {
   return list;
 }
 
-void addBlockToList(BlockList *list, void *block) {
+void addBlockToList(BlockList *list, void *block, BlockBehaviorType type) {
   if (list == NULL || block == NULL) {
     return;
   }
 
-  BlockWrapper *wrapper = create_block_wrapper(++list->max_id, block);
+  BlockWrapper *wrapper = create_block_wrapper(++list->max_id, block, type);
   if (wrapper == NULL) {
     return;
   }
@@ -53,11 +53,13 @@ void destroy_block_list(BlockList *block_list) {
   free(block_list);
 }
 
-BlockWrapper *create_block_wrapper(int id, void *block) {
+BlockWrapper *create_block_wrapper(int id, void *block, BlockBehaviorType type) {
   BlockWrapper *wrapper = (BlockWrapper *)malloc(sizeof(BlockWrapper));
   if (wrapper == NULL) {
     return NULL;
   }
+
+  wrapper->type = type;
   wrapper->id = id;
   wrapper->block = block;
 

@@ -6,6 +6,7 @@
 typedef struct block_wrapper {
   int id;
   void *block;
+  BlockBehaviorType type;
   struct block_wrapper *next;
   struct block_wrapper *prev;
 } BlockWrapper;
@@ -18,10 +19,10 @@ typedef struct block_list {
 } BlockList;
 
 BlockList *create_block_list();
-void addBlockToList(BlockList *, void *);
+void addBlockToList(BlockList *, void *, BlockBehaviorType type);
 void destroy_block_list(BlockList *);
 
-BlockWrapper *create_block_wrapper(int id, void *block);
+BlockWrapper *create_block_wrapper(int id, void *block, BlockBehaviorType type);
 void destroy_block_wrapper(BlockWrapper *wrapper);
 
 #endif

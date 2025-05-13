@@ -3,6 +3,7 @@
 #include "parse-blocks.h"
 #include "player.h"
 #include "scene.h"
+#include "stage-loader.h"
 
 #include <GL/glut.h>
 #include <math.h>
@@ -11,15 +12,16 @@
 Player player;
 
 void init() {
-  glClearColor(0.75f, 0.75f, 1.0f, 1.0f);
-  init_player(0, 0, 0, &player);
-  // load_blocks_from_file("./3d-objects/blocks.conf", blocks);
+  glClearColor(0.529f, 0.808f, 0.922f, 1.0);
+  init_global_data();
+  init_player(0, 0.12, 0, &player);
+  load_stage("./3d-objects/stage-1.conf");
 }
 
 void display() {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-  // atualizar blocos
+  // atualizar blockos
   //  as peculiaridades de cada um e registra ações no player na fila de evento
   // atuliazar fisica
   //  registra em uma fila de eventos
@@ -32,6 +34,7 @@ void display() {
 
   glLoadIdentity();
   drawScene();
+  render_stage();
   glutSwapBuffers();
 }
 
@@ -73,7 +76,7 @@ int main(int argc, char **argv) {
   glutInit(&argc, argv);
   glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
 
-  glutInitWindowSize(1920, 1080); // ou qualquer resolução do seu monitor
+  glutInitWindowSize(1920, 1080);
   glutCreateWindow("Jogo em 3D - Primeira Pessoa");
   glutFullScreen();
 

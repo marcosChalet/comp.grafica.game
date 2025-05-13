@@ -1,4 +1,5 @@
-#include "meshLoader.h"
+#include "mesh-loader.h"
+
 #include <GL/gl.h>
 #include <stdio.h>
 #include <stdlib.h>

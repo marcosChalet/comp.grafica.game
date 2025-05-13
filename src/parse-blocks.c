@@ -1,6 +1,6 @@
-#include "blocks.h"
-
+#include "parse-blocks.h"
 #include "global.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -25,8 +25,7 @@ BlockTypeEnum parse_block_type(const char *str) {
   return -1;
 }
 
-void load_blocks_from_file(const char *filename, void **blocks) {
-  int num_blocks = 0;
+void load_blocks_from_file(const char *filename) {
   FILE *file = fopen(filename, "r");
   if (!file) {
     perror("Erro ao abrir arquivo");
@@ -70,7 +69,7 @@ void load_blocks_from_file(const char *filename, void **blocks) {
                           .amplitude = amplitude};
 
       MovingBlock *mb = create_moving_block(temp);
-      blocks[num_blocks++] = (void *)mb;
+      addBlockToGlobalData(mb, behavior);
       print_block((BlockBasic *)mb); // imprime para debug
 
     } else {
@@ -88,7 +87,7 @@ void load_blocks_from_file(const char *filename, void **blocks) {
                          .block_type = block_type};
 
       BlockBasic *b = create_block(temp);
-      blocks[num_blocks++] = (void *)b;
+      addBlockToGlobalData(b, behavior);
       print_block(b); // imprime para debug
     }
   }
