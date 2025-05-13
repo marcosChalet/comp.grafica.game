@@ -12,9 +12,9 @@
 Player player;
 
 void init() {
-  glClearColor(0.75f, 0.75f, 1.0f, 1.0f);
+  glClearColor(0.529f, 0.808f, 0.922f, 1.0);
   init_global_data();
-  init_player(0, 0, 0, &player);
+  init_player(0, 0.12, 0, &player);
   load_stage("./3d-objects/stage-1.conf");
 }
 
@@ -76,7 +76,7 @@ int main(int argc, char **argv) {
   glutInit(&argc, argv);
   glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
 
-  glutInitWindowSize(1920, 1080); // ou qualquer resolução do seu monitor
+  glutInitWindowSize(1920, 1080);
   glutCreateWindow("Jogo em 3D - Primeira Pessoa");
   glutFullScreen();
 

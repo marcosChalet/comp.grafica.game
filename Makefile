@@ -19,8 +19,10 @@ endif
 all: libsGame Game
 
 libsGame: \
+	$(OBJ)/import-object.o \
 	$(OBJ)/stage-loader.o \
 	$(OBJ)/parse-blocks.o \
+	$(OBJ)/mesh-loader.o \
 	$(OBJ)/block-list.o \
 	$(OBJ)/platform.o \
 	$(OBJ)/player.o \

@@ -1,5 +1,5 @@
-#ifndef BLOCKK_LIST_H
-#define BLOCKK_LIST_H
+#ifndef BLOCK_LIST_H
+#define BLOCK_LIST_H
 
 #include "blocks.h"
 

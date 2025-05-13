@@ -7,15 +7,17 @@
 void draw_block(BlockBasic *b) {
   glPushMatrix();
 
-  GLfloat mat_amb_diff[] = {1.0, 1.0, 1.0, 1.0};
-  GLfloat mat_specular[] = {0.0, 0.0, 0.0, 1.0};
-  GLfloat mat_shininess[] = {0.0};
+  GLfloat ka[] = {1.0, 1.0, 1.0, 1.0};
+  GLfloat kd[] = {1.0, 1.0, 1.0, 1.0};
+  GLfloat ks[] = {0.0, 0.0, 0.0, 1.0};
+  GLfloat ns = 64.0f;
 
-  glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mat_amb_diff);
-  glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
-  glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
+  glMaterialfv(GL_FRONT, GL_AMBIENT, ka);
+  glMaterialfv(GL_FRONT, GL_DIFFUSE, kd);
+  glMaterialfv(GL_FRONT, GL_SPECULAR, ks);
+  glMaterialf(GL_FRONT, GL_SHININESS, ns);
 
-  glColor3f(0.2, 0.9, 0.2);
+  // glColor3f(0.2, 0.9, 0.2);
   glTranslatef(b->x, b->y, b->z);
   glutSolidCube(b->size);
   glPopMatrix();
@@ -24,15 +26,17 @@ void draw_block(BlockBasic *b) {
 void draw_moving_block(MovingBlock *mv) {
   glPushMatrix();
 
-  GLfloat mat_amb_diff[] = {1.0, 1.0, 1.0, 1.0};
-  GLfloat mat_specular[] = {0.0, 0.0, 0.0, 1.0};
-  GLfloat mat_shininess[] = {0.0};
+  GLfloat ka[] = {1.0, 1.0, 1.0, 1.0};
+  GLfloat kd[] = {1.0, 1.0, 1.0, 1.0};
+  GLfloat ks[] = {0.0, 0.0, 0.0, 1.0};
+  GLfloat ns = 64.0f;
 
-  glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, mat_amb_diff);
-  glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
-  glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
+  glMaterialfv(GL_FRONT, GL_AMBIENT, ka);
+  glMaterialfv(GL_FRONT, GL_DIFFUSE, kd);
+  glMaterialfv(GL_FRONT, GL_SPECULAR, ks);
+  glMaterialf(GL_FRONT, GL_SHININESS, ns);
 
-  glColor3f(0.2, 0.9, 0.2);
+  // glColor3f(0.2, 0.9, 0.2);
   glTranslatef(mv->x, mv->y, mv->z);
   glutSolidCube(mv->size);
   glPopMatrix();
