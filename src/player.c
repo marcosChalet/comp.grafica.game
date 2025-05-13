@@ -30,6 +30,8 @@ Player *create_player() {
   player_ptr->gazeDirectionY = 0.0f;
   player_ptr->gazeDirectionZ = sinf(yaw * (M_PI / 180.0f));
 
+  player_ptr->relative_collision_box = create_relative_collision_box(0.09, 0.18, 0.09);
+
   return player_ptr;
 }
 
@@ -93,6 +95,8 @@ void move_player() {
     }
   }
 }
+
+void is_player_colliding() {}
 
 void change_position_direction(unsigned char key, int isPressed) {
   keys[key] = isPressed;

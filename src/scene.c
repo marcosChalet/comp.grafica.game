@@ -1,12 +1,18 @@
 #include "platform.h"
 #include "player.h"
+#include "routines.h"
 #include <GL/glut.h>
+#include <stdio.h>
 
 void drawScene() {
 
   // scene sample
 
   update_player_position();
+
+  if (check_collisions()) {
+    printf("colidindo!\n");
+  }
 
   // drawPlatform(6.0f, 0.0f, 0.0f, 4.0f, 0.2f, 3.0f);
 

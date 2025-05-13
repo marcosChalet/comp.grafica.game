@@ -28,7 +28,9 @@ libsGame: \
 	$(OBJ)/player.o \
 	${OBJ}/global.o \
 	$(OBJ)/scene.o \
-	$(OBJ)/blocks.o
+	$(OBJ)/blocks.o \
+	$(OBJ)/collision-boxes.o \
+	$(OBJ)/routines.o 
 	
 Game: clear_app \
 	$(BIN)/game
