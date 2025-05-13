@@ -77,6 +77,7 @@ BlockBasic *create_block(BlockBasic block) {
   new_block->size = block.size;
   new_block->block_type = block.block_type;
   new_block->behavior_type = block.behavior_type;
+  new_block->relative_collision_box = block.relative_collision_box;
 
   return new_block;
 }
@@ -96,6 +97,9 @@ MovingBlock *create_moving_block(MovingBlock mv) {
   new_block->behavior_type = mv.behavior_type;
   new_block->amplitude = mv.amplitude;
   new_block->speed = mv.speed;
+  new_block->relative_collision_box = mv.relative_collision_box;
+  new_block->is_backing = false;
+  new_block->start_position_y = mv.y;
 
   return new_block;
 }
