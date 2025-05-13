@@ -13,8 +13,9 @@ Player player;
 
 void init() {
   glClearColor(0.529f, 0.808f, 0.922f, 1.0);
+  printf("initializing global stage\n");
   init_global_data();
-  init_player(0, 0.12, 0, &player);
+  printf("loading stage\n");
   load_stage("./3d-objects/stage-1.conf");
 }
 

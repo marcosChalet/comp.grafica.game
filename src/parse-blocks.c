@@ -72,6 +72,8 @@ void load_blocks_from_file(const char *filename) {
       addBlockToGlobalData(mb, behavior);
       print_block((BlockBasic *)mb); // imprime para debug
 
+    } else if (behavior == BLOCK_T_SPAWN) {
+      init_player(x, y, z, get_global_player());
     } else {
       char *size_str = strstr(line, "size=");
 
