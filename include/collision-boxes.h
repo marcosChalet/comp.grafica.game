@@ -1,6 +1,8 @@
 #ifndef COLLISION_BOXES_H
 #define COLLISION_BOXES_H
 
+#include <stdbool.h>
+
 typedef enum collision_direction {
   COLLISION_NONE = 0,
   COLLISION_TOP,

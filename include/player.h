@@ -12,10 +12,11 @@ typedef struct player {
   GLdouble gazeDirectionY;
   GLdouble gazeDirectionZ;
   GLdouble groundLevel;
-
   RelativeCollisionBox *relative_collision_box;
+  
   float collisionYOffset;
 
+  float yaw, pitch;
   float sensibility;
   float jumpVelocity;
   float jumpStrength;
