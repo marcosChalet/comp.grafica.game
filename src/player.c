@@ -129,8 +129,8 @@ void move_player() {
       p->y = b->y + b->relative_collision_box->height - p->collisionYOffset;
     } else {
       // Colidiu no teto
-      p->jumpVelocity = 0.0f;
       p->y -= p->jumpVelocity; // desfaz se bateu no teto
+      p->jumpVelocity = 0.0f;
     }
   }
 }
