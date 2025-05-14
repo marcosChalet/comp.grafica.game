@@ -14,10 +14,10 @@ ImportedObject *award;
 void draw_award(void *block, BlockBehaviorType type) {
   if (type == BLOCK_T_MOVING) {
     MovingBlock *tmp = block;
-    draw_imported_object(award, tmp->x, tmp->y + 0.08, tmp->z, 0.003);
+    draw_imported_object(award, tmp->x, tmp->y + 0.13, tmp->z, 0.003);
   } else {
     BlockBasic *tmp = block;
-    draw_imported_object(award, tmp->x, tmp->y + 0.08, tmp->z, 0.003);
+    draw_imported_object(award, tmp->x, tmp->y + 0.13, tmp->z, 0.003);
   }
 }
 
