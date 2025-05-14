@@ -17,14 +17,14 @@ void sun_light_init() {
   glEnable(GL_LIGHTING);
   glEnable(GL_LIGHT0);
 
-  GLfloat light_ambient[] = {0.2f, 0.2f, 0.2f, 1.0f};
+  GLfloat light_ambient[] = {0.1f, 0.1f, 0.1f, 1.0f};
   GLfloat light_diffuse[] = {1.0f, 0.8f, 0.4f, 1.0f};
-  GLfloat light_specular[] = {1.0f, 1.0f, 1.0f, 1.0f};
+  GLfloat light_specular[] = {0.9f, 1.0f, 0.9f, 1.0f};
   glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
   glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
   glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
 
-  GLfloat sun_direction[] = {sun_x, sun_y, sun_z, 1.0f};
+  GLfloat sun_direction[] = {sun_x, sun_y, sun_z, 0.0f};
   glLightfv(GL_LIGHT0, GL_POSITION, sun_direction);
 }
 
