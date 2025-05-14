@@ -22,6 +22,10 @@ BlockTypeEnum parse_block_type(const char *str) {
     return BLOCK_T_INVISIBLE;
   if (strcmp(str, "BLOCK_T_GRASS") == 0)
     return BLOCK_T_GRASS;
+  if (strcmp(str, "BLOCK_T_VICTORY") == 0)
+    return BLOCK_T_VICTORY;
+  if (strcmp(str, "BLOCK_T_WOOD") == 0)
+    return BLOCK_T_WOOD;
   return -1;
 }
 

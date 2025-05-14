@@ -1,27 +1,220 @@
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
+
 #include "blocks.h"
 
-#include <GL/glut.h>
 #include <stdio.h>
 #include <stdlib.h>
 
 #define MAX_MOVING_BLOCK_Y 0.8f
 #define MIN_MOVING_BLOCK_Y -0.0f
 
+#define BLOCK_GRASS_TOP "./objects-to-import/azalea_top.png"
+#define BLOCK_GRASS_SIDE "./objects-to-import/grass_block_side.png"
+#define BLOCK_DIRT "./objects-to-import/dirt.png"
+#define BLOCK_WOOD "./objects-to-import/acacia_planks.png"
+#define BLOCK_VICTORY "./objects-to-import/crying_obsidian.png"
+static GLuint side_texture;
+static GLuint dirt_texture;
+static GLuint grass_texture;
+static GLuint block_victory_texture;
+static GLuint frosted_ice;
+
+GLuint load_texture(const char *filename) {
+  int width, height, channels;
+  stbi_set_flip_vertically_on_load(1);
+  unsigned char *data = stbi_load(filename, &width, &height, &channels, 0);
+  if (!data) {
+    printf("Erro ao carregar imagem: %s\n", filename);
+    return 0;
+  }
+
+  GLuint tex;
+  glGenTextures(1, &tex);
+  glBindTexture(GL_TEXTURE_2D, tex);
+
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+  GLenum format = (channels == 4) ? GL_RGBA : GL_RGB;
+  glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
+  stbi_image_free(data);
+
+  return tex;
+}
+
+void load_textures() {
+  side_texture = load_texture(BLOCK_GRASS_SIDE);
+  dirt_texture = load_texture(BLOCK_DIRT);
+  grass_texture = load_texture(BLOCK_GRASS_TOP);
+  block_victory_texture = load_texture(BLOCK_VICTORY);
+  frosted_ice = load_texture(BLOCK_WOOD);
+
+  if (!side_texture || !dirt_texture || !grass_texture || !block_victory_texture || !frosted_ice) {
+    printf("Falha ao carregar textura.\n");
+  }
+}
+
+void draw_grass_textured_cube(float size) {
+  float half = size / 2.0f;
+  glEnable(GL_TEXTURE_2D);
+  glDisable(GL_LIGHTING);
+
+  glBindTexture(GL_TEXTURE_2D, grass_texture);
+  glBegin(GL_QUADS);
+  // Cima
+  glTexCoord2f(0, 0);
+  glVertex3f(-half, half, half);
+  glTexCoord2f(1, 0);
+  glVertex3f(half, half, half);
+  glTexCoord2f(1, 1);
+  glVertex3f(half, half, -half);
+  glTexCoord2f(0, 1);
+  glVertex3f(-half, half, -half);
+  glEnd();
+
+  glBindTexture(GL_TEXTURE_2D, dirt_texture);
+  glBegin(GL_QUADS);
+  // Baixo
+  glTexCoord2f(0, 0);
+  glVertex3f(-half, -half, -half);
+  glTexCoord2f(1, 0);
+  glVertex3f(half, -half, -half);
+  glTexCoord2f(1, 1);
+  glVertex3f(half, -half, half);
+  glTexCoord2f(0, 1);
+  glVertex3f(-half, -half, half);
+  glEnd();
+
+  glBindTexture(GL_TEXTURE_2D, side_texture);
+  glBegin(GL_QUADS);
+  // Frente
+  glTexCoord2f(0, 0);
+  glVertex3f(-half, -half, half);
+  glTexCoord2f(1, 0);
+  glVertex3f(half, -half, half);
+  glTexCoord2f(1, 1);
+  glVertex3f(half, half, half);
+  glTexCoord2f(0, 1);
+  glVertex3f(-half, half, half);
+
+  // Trás
+  glTexCoord2f(0, 0);
+  glVertex3f(half, -half, -half);
+  glTexCoord2f(1, 0);
+  glVertex3f(-half, -half, -half);
+  glTexCoord2f(1, 1);
+  glVertex3f(-half, half, -half);
+  glTexCoord2f(0, 1);
+  glVertex3f(half, half, -half);
+
+  // Esquerda
+  glTexCoord2f(0, 0);
+  glVertex3f(-half, -half, -half);
+  glTexCoord2f(1, 0);
+  glVertex3f(-half, -half, half);
+  glTexCoord2f(1, 1);
+  glVertex3f(-half, half, half);
+  glTexCoord2f(0, 1);
+  glVertex3f(-half, half, -half);
+
+  // Direita
+  glTexCoord2f(0, 0);
+  glVertex3f(half, -half, half);
+  glTexCoord2f(1, 0);
+  glVertex3f(half, -half, -half);
+  glTexCoord2f(1, 1);
+  glVertex3f(half, half, -half);
+  glTexCoord2f(0, 1);
+  glVertex3f(half, half, half);
+  glEnd();
+
+  glEnable(GL_LIGHTING);
+  glDisable(GL_TEXTURE_2D);
+}
+
+void draw_uniform_textured_cube(float size, GLuint texture) {
+  float half = size / 2.0f;
+  glEnable(GL_TEXTURE_2D);
+  glDisable(GL_LIGHTING);
+
+  glBindTexture(GL_TEXTURE_2D, texture);
+  glBegin(GL_QUADS);
+  // Cima
+  glTexCoord2f(0, 0);
+  glVertex3f(-half, half, half);
+  glTexCoord2f(1, 0);
+  glVertex3f(half, half, half);
+  glTexCoord2f(1, 1);
+  glVertex3f(half, half, -half);
+  glTexCoord2f(0, 1);
+  glVertex3f(-half, half, -half);
+
+  // Baixo
+  glTexCoord2f(0, 0);
+  glVertex3f(-half, -half, -half);
+  glTexCoord2f(1, 0);
+  glVertex3f(half, -half, -half);
+  glTexCoord2f(1, 1);
+  glVertex3f(half, -half, half);
+  glTexCoord2f(0, 1);
+  glVertex3f(-half, -half, half);
+
+  // Frente
+  glTexCoord2f(0, 0);
+  glVertex3f(-half, -half, half);
+  glTexCoord2f(1, 0);
+  glVertex3f(half, -half, half);
+  glTexCoord2f(1, 1);
+  glVertex3f(half, half, half);
+  glTexCoord2f(0, 1);
+  glVertex3f(-half, half, half);
+
+  // Trás
+  glTexCoord2f(0, 0);
+  glVertex3f(half, -half, -half);
+  glTexCoord2f(1, 0);
+  glVertex3f(-half, -half, -half);
+  glTexCoord2f(1, 1);
+  glVertex3f(-half, half, -half);
+  glTexCoord2f(0, 1);
+  glVertex3f(half, half, -half);
+
+  // Esquerda
+  glTexCoord2f(0, 0);
+  glVertex3f(-half, -half, -half);
+  glTexCoord2f(1, 0);
+  glVertex3f(-half, -half, half);
+  glTexCoord2f(1, 1);
+  glVertex3f(-half, half, half);
+  glTexCoord2f(0, 1);
+  glVertex3f(-half, half, -half);
+
+  // Direita
+  glTexCoord2f(0, 0);
+  glVertex3f(half, -half, half);
+  glTexCoord2f(1, 0);
+  glVertex3f(half, -half, -half);
+  glTexCoord2f(1, 1);
+  glVertex3f(half, half, -half);
+  glTexCoord2f(0, 1);
+  glVertex3f(half, half, half);
+  glEnd();
+
+  glEnable(GL_LIGHTING);
+  glDisable(GL_TEXTURE_2D);
+}
+
 void draw_block(BlockBasic *b) {
   glPushMatrix();
-
-  GLfloat ka[] = {0.4, 1.0, 0.2, 1.0};
-  GLfloat kd[] = {0.5, 0.7, 0.4, 1.0};
-  GLfloat ks[] = {0.12, 0.8, 0.33, 1.0};
-  GLfloat ns = 14.0f;
-
-  glMaterialfv(GL_FRONT, GL_AMBIENT, ka);
-  glMaterialfv(GL_FRONT, GL_DIFFUSE, kd);
-  glMaterialfv(GL_FRONT, GL_SPECULAR, ks);
-  glMaterialf(GL_FRONT, GL_SHININESS, ns);
-
   glTranslatef(b->x, b->y, b->z);
-  glutSolidCube(b->size);
+  if (b->block_type == BLOCK_T_VICTORY) {
+    draw_uniform_textured_cube(b->size, block_victory_texture);
+  } else if (b->block_type == BLOCK_T_WOOD) {
+    draw_uniform_textured_cube(b->size, frosted_ice);
+  } else {
+    draw_grass_textured_cube(b->size);
+  }
   glPopMatrix();
 }
 
@@ -48,21 +241,15 @@ void update_block_moving_behavior(MovingBlock *block) {
 
 void draw_moving_block(MovingBlock *mv) {
   glPushMatrix();
-
   update_block_moving_behavior(mv);
-
-  GLfloat ka[] = {0.4, 1.0, 0.2, 1.0};
-  GLfloat kd[] = {0.5, 0.7, 0.4, 1.0};
-  GLfloat ks[] = {0.12, 0.8, 0.33, 1.0};
-  GLfloat ns = 14.0f;
-
-  glMaterialfv(GL_FRONT, GL_AMBIENT, ka);
-  glMaterialfv(GL_FRONT, GL_DIFFUSE, kd);
-  glMaterialfv(GL_FRONT, GL_SPECULAR, ks);
-  glMaterialf(GL_FRONT, GL_SHININESS, ns);
-
   glTranslatef(mv->x, mv->y, mv->z);
-  glutSolidCube(mv->size);
+  if (mv->block_type == BLOCK_T_VICTORY) {
+    draw_uniform_textured_cube(mv->size, block_victory_texture);
+  } else if (mv->block_type == BLOCK_T_WOOD) {
+    draw_uniform_textured_cube(mv->size, frosted_ice);
+  } else {
+    draw_grass_textured_cube(mv->size);
+  }
   glPopMatrix();
 }
 

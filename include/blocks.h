@@ -2,6 +2,8 @@
 #define BLOCKS_H
 
 #include "collision-boxes.h"
+
+#include <GL/glut.h>
 #include <stdbool.h>
 
 typedef enum block_behavior_type {
@@ -13,6 +15,8 @@ typedef enum block_behavior_type {
 typedef enum block_type {
   BLOCK_T_INVISIBLE,
   BLOCK_T_GRASS,
+  BLOCK_T_VICTORY,
+  BLOCK_T_WOOD,
 } BlockTypeEnum;
 
 #define BLOCK_BASE                                                                                 \
@@ -42,6 +46,7 @@ void destroy_moving_block(MovingBlock *);
 
 void print_block(BlockBasic *b);
 
+void load_textures();
 void draw_block(BlockBasic *b);
 void draw_moving_block(MovingBlock *mv);
 
