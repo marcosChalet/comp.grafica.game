@@ -145,8 +145,8 @@ void change_look_direction(float offsetX, float offsetY) {
 
   if (player_ptr->pitch > 80.0f)
     player_ptr->pitch = 80.0f;
-  if (player_ptr->pitch < -25.0f)
-    player_ptr->pitch = -25.0f;
+  if (player_ptr->pitch < -89.0f)
+    player_ptr->pitch = -89.0f;
 
   float radYaw = player_ptr->yaw * (M_PI / 180.0f);
   float radPitch = player_ptr->pitch * (M_PI / 180.0f);
