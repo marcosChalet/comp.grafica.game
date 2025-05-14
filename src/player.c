@@ -1,4 +1,6 @@
 #include "player.h"
+#include "global.h"
+#include "routines.h"
 #include <math.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -27,13 +29,14 @@ Player *create_player() {
   player_ptr->jumpStrength = 0.022f;
   player_ptr->jumpVelocity = 0.0f;
   player_ptr->sensibility = 0.03f;
-  player_ptr->groundLevel = player_ptr->y;
+  player_ptr->groundLevel = -1000;
 
   player_ptr->gazeDirectionX = cosf(player_ptr->yaw * (M_PI / 180.0f));
   player_ptr->gazeDirectionY = 0.0f;
   player_ptr->gazeDirectionZ = sinf(player_ptr->yaw * (M_PI / 180.0f));
 
   player_ptr->relative_collision_box = create_relative_collision_box(0.09, 0.18, 0.09);
+  player_ptr->collisionYOffset = -0.18;
 
   return player_ptr;
 }
@@ -60,41 +63,74 @@ void update_player_position() {
 }
 
 void move_player() {
+  GlobalData *g = get_global_obj();
+  Player *p = player_ptr;
+
   float moveX = 0, moveZ = 0;
 
+  // Direção de movimento com base nas teclas
   if (keys['w']) {
-    moveX += player_ptr->gazeDirectionX;
-    moveZ += player_ptr->gazeDirectionZ;
+    moveX += p->gazeDirectionX;
+    moveZ += p->gazeDirectionZ;
   }
   if (keys['s']) {
-    moveX -= player_ptr->gazeDirectionX;
-    moveZ -= player_ptr->gazeDirectionZ;
+    moveX -= p->gazeDirectionX;
+    moveZ -= p->gazeDirectionZ;
   }
   if (keys['a']) {
-    moveX += player_ptr->gazeDirectionZ;
-    moveZ -= player_ptr->gazeDirectionX;
+    moveX += p->gazeDirectionZ;
+    moveZ -= p->gazeDirectionX;
   }
   if (keys['d']) {
-    moveX -= player_ptr->gazeDirectionZ;
-    moveZ += player_ptr->gazeDirectionX;
+    moveX -= p->gazeDirectionZ;
+    moveZ += p->gazeDirectionX;
   }
 
-  if (keys[' '] && !player_ptr->isJumping) {
-    player_ptr->jumpVelocity = player_ptr->jumpStrength;
-    player_ptr->isJumping = true;
+  // Normaliza vetor para evitar correr mais rápido na diagonal
+  float length = sqrtf(moveX * moveX + moveZ * moveZ);
+  if (length > 0) {
+    moveX /= length;
+    moveZ /= length;
   }
 
-  player_ptr->x += moveX * player_ptr->speed;
-  player_ptr->z += moveZ * player_ptr->speed;
+  // ---- Movimento em X com correção ----
+  p->x += moveX * p->speed;
+  void *collided = check_collisions();
+  if (collided != NULL) {
+    p->x -= moveX * p->speed; // desfaz o movimento se colidiu
+  }
 
-  if (player_ptr->isJumping) {
-    player_ptr->y += player_ptr->jumpVelocity;
-    player_ptr->jumpVelocity += gravity;
+  // ---- Movimento em Z com correção ----
+  p->z += moveZ * p->speed;
+  collided = check_collisions();
+  if (collided != NULL) {
+    p->z -= moveZ * p->speed; // desfaz o movimento se colidiu
+  }
 
-    if (player_ptr->y <= player_ptr->groundLevel) {
-      player_ptr->y = player_ptr->groundLevel;
-      player_ptr->isJumping = false;
-      player_ptr->jumpVelocity = 0.0f;
+  // ---- Pulo e gravidade (Y) ----
+  if (keys[' '] && !p->isJumping) {
+    p->jumpVelocity = p->jumpStrength;
+    p->isJumping = true;
+  }
+
+  p->y += p->jumpVelocity;
+  p->jumpVelocity += gravity;
+
+  collided = check_collisions();
+  if (collided != NULL) {
+    // Verifica direção da colisão
+    CollisionDirection dir = check_player_block_collision_direction(p, (BlockBasic *)collided);
+    if (dir == COLLISION_BOTTOM) {
+      // Tocou o chão
+      p->isJumping = false;
+      p->jumpVelocity = 0.0f;
+      // Alinha com o topo do bloco
+      BlockBasic *b = (BlockBasic *)collided;
+      p->y = b->y + b->relative_collision_box->height - p->collisionYOffset;
+    } else {
+      // Colidiu no teto
+      p->y -= p->jumpVelocity; // desfaz se bateu no teto
+      p->jumpVelocity = 0.0f;
     }
   }
 }
