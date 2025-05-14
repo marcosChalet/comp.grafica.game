@@ -3,6 +3,16 @@
 
 #include <stdbool.h>
 
+typedef enum collision_direction {
+  COLLISION_NONE = 0,
+  COLLISION_TOP,
+  COLLISION_BOTTOM,
+  COLLISION_FRONT,
+  COLLISION_BACK,
+  COLLISION_LEFT,
+  COLLISION_RIGHT
+} CollisionDirection;
+
 typedef struct relative_collision_box {
   float width;
   float height;
