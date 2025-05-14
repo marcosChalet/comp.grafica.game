@@ -23,6 +23,7 @@ void draw_award(void *block, BlockBehaviorType type) {
 
 void load_stage(char *path) {
   load_blocks_from_file(path);
+  set_award_block(get_global_obj()->block_list->tail);
   award = import_object(AWARD_PATH);
 }
 
@@ -40,7 +41,7 @@ void render_stage() {
     aux = aux->next;
   }
 
-  draw_award(stage_objects->tail->block, stage_objects->tail->type);
+  draw_award(get_award_block()->block, get_award_block()->type);
 }
 
 void free_stage() {

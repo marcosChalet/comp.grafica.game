@@ -1,4 +1,5 @@
 #include "blocks.h"
+#include "game-conditions.h"
 #include "global.h"
 #include "parse-blocks.h"
 #include "player.h"
@@ -25,6 +26,12 @@ void init() {
 void display() {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glLoadIdentity();
+
+  check_victory();
+  if (is_dead()) {
+    respawn_player();
+    return;
+  }
 
   drawScene();
   render_stage();

@@ -15,5 +15,7 @@ Player *get_global_player();
 void init_global_data();
 void addBlockToGlobalData(void *, BlockBehaviorType type);
 void destroy_global_data(GlobalData *);
+BlockWrapper *get_award_block();
+void set_award_block(BlockWrapper *);
 
 #endif

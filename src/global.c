@@ -4,6 +4,7 @@
 #include <stdlib.h>
 
 GlobalData *global_data;
+BlockWrapper *award_block;
 
 GlobalData *create_global_data() {
   GlobalData *data = (GlobalData *)malloc(sizeof(GlobalData));
@@ -47,4 +48,12 @@ void destroy_global_data(GlobalData *data) {
 
   destroy_block_list(data->block_list);
   free(data);
+}
+
+void set_award_block(BlockWrapper *b) {
+  award_block = b;
+}
+
+BlockWrapper *get_award_block() {
+  return award_block;
 }

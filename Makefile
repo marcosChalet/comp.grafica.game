@@ -20,6 +20,7 @@ all: libsGame Game
 
 libsGame: \
 	$(OBJ)/collision-boxes.o \
+	$(OBJ)/game-conditions.o \
 	$(OBJ)/import-object.o \
 	$(OBJ)/stage-loader.o \
 	$(OBJ)/parse-blocks.o \

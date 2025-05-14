@@ -5,7 +5,7 @@
 #include <stdlib.h>
 
 #define MAX_MOVING_BLOCK_Y 0.8f
-#define MIN_MOVING_BLOCK_Y 0.5f
+#define MIN_MOVING_BLOCK_Y -0.0f
 
 void draw_block(BlockBasic *b) {
   glPushMatrix();
@@ -27,7 +27,7 @@ void draw_block(BlockBasic *b) {
 
 void update_block_moving_behavior(MovingBlock *block) {
   float max_y = block->start_position_y + MAX_MOVING_BLOCK_Y;
-  float min_y = block->start_position_y - MIN_MOVING_BLOCK_Y;
+  float min_y = block->start_position_y + MIN_MOVING_BLOCK_Y;
 
   if (block->y - block->start_position_y >= max_y) {
     block->is_backing = true;
@@ -61,7 +61,6 @@ void draw_moving_block(MovingBlock *mv) {
   glMaterialfv(GL_FRONT, GL_SPECULAR, ks);
   glMaterialf(GL_FRONT, GL_SHININESS, ns);
 
-  // glColor3f(0.2, 0.9, 0.2);
   glTranslatef(mv->x, mv->y, mv->z);
   glutSolidCube(mv->size);
   glPopMatrix();

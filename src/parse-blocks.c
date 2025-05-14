@@ -70,7 +70,6 @@ void load_blocks_from_file(const char *filename) {
 
       MovingBlock *mb = create_moving_block(temp);
       addBlockToGlobalData(mb, behavior);
-      print_block((BlockBasic *)mb); // imprime para debug
 
     } else if (behavior == BLOCK_T_SPAWN) {
       init_player(x, y, z, get_global_player());
@@ -90,7 +89,6 @@ void load_blocks_from_file(const char *filename) {
 
       BlockBasic *b = create_block(temp);
       addBlockToGlobalData(b, behavior);
-      print_block(b); // imprime para debug
     }
   }
 
