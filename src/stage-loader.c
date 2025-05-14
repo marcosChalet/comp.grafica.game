@@ -24,7 +24,7 @@ void draw_award(void *block, BlockBehaviorType type) {
 void load_stage(char *path) {
   load_blocks_from_file(path);
   load_textures();
-  set_award_block(get_global_obj()->block_list->head);
+  set_award_block(get_global_obj()->block_list->tail);
   award = import_object(AWARD_PATH);
 }
 
