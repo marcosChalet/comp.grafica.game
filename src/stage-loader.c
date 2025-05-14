@@ -24,22 +24,7 @@ void draw_award(void *block, BlockBehaviorType type) {
 void load_stage(char *path) {
   load_blocks_from_file(path);
   load_textures();
-  set_award_block(get_global_obj()->block_list->tail);
-
-  // BlockList *stage_objects = get_global_obj()->block_list;
-  // BlockWrapper *aux = stage_objects->head;
-  // for (int i = 0; i < stage_objects->size; i++) {
-  //   if (aux->type == BLOCK_T_MOVING) {
-  //     if (((MovingBlock *)aux->block)->block_type == BLOCK_T_VICTORY) {
-  //       set_award_block(aux);
-  //     }
-  //   } else {
-  //     if (((MovingBlock *)aux->block)->block_type == BLOCK_T_VICTORY) {
-  //       set_award_block(aux);
-  //     }
-  //   }
-  // }
-
+  set_award_block(get_global_obj()->block_list->head);
   award = import_object(AWARD_PATH);
 }
 
