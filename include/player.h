@@ -14,6 +14,7 @@ typedef struct player {
   GLdouble groundLevel;
 
   RelativeCollisionBox *relative_collision_box;
+  float collisionYOffset;
 
   float sensibility;
   float jumpVelocity;
