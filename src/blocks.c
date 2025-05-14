@@ -10,17 +10,16 @@
 void draw_block(BlockBasic *b) {
   glPushMatrix();
 
-  GLfloat ka[] = {1.0, 1.0, 1.0, 1.0};
-  GLfloat kd[] = {1.0, 1.0, 1.0, 1.0};
-  GLfloat ks[] = {0.0, 0.0, 0.0, 1.0};
-  GLfloat ns = 64.0f;
+  GLfloat ka[] = {0.4, 1.0, 0.2, 1.0};
+  GLfloat kd[] = {0.5, 0.7, 0.4, 1.0};
+  GLfloat ks[] = {0.12, 0.8, 0.33, 1.0};
+  GLfloat ns = 14.0f;
 
   glMaterialfv(GL_FRONT, GL_AMBIENT, ka);
   glMaterialfv(GL_FRONT, GL_DIFFUSE, kd);
   glMaterialfv(GL_FRONT, GL_SPECULAR, ks);
   glMaterialf(GL_FRONT, GL_SHININESS, ns);
 
-  // glColor3f(0.2, 0.9, 0.2);
   glTranslatef(b->x, b->y, b->z);
   glutSolidCube(b->size);
   glPopMatrix();
@@ -52,10 +51,10 @@ void draw_moving_block(MovingBlock *mv) {
 
   update_block_moving_behavior(mv);
 
-  GLfloat ka[] = {1.0, 1.0, 1.0, 1.0};
-  GLfloat kd[] = {1.0, 1.0, 1.0, 1.0};
-  GLfloat ks[] = {0.0, 0.0, 0.0, 1.0};
-  GLfloat ns = 64.0f;
+  GLfloat ka[] = {0.4, 1.0, 0.2, 1.0};
+  GLfloat kd[] = {0.5, 0.7, 0.4, 1.0};
+  GLfloat ks[] = {0.12, 0.8, 0.33, 1.0};
+  GLfloat ns = 14.0f;
 
   glMaterialfv(GL_FRONT, GL_AMBIENT, ka);
   glMaterialfv(GL_FRONT, GL_DIFFUSE, kd);

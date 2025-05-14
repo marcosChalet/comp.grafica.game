@@ -5,8 +5,6 @@
 
 Player *player_ptr;
 
-// float yaw = -90.0f, pitch = 0.0f;
-
 const float gravity = -0.0009f;
 bool is_jumping = false;
 
