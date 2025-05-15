@@ -1,3 +1,4 @@
+#include "audio.h"
 #include "blocks.h"
 #include "game-conditions.h"
 #include "global.h"
@@ -21,6 +22,7 @@ void init() {
   printf("loading stage\n");
   load_stage("./3d-objects/stage-1.conf");
   sun_light_init();
+  init_audio();
 }
 
 void display() {
