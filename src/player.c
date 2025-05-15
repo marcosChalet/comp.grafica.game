@@ -66,6 +66,15 @@ void move_player() {
 
   float moveX = 0, moveZ = 0;
 
+  if (keys['r']) {
+    SpawnPoint *spawn_point = get_spawn_point();
+    p->x = spawn_point->x;
+    p->y = spawn_point->y;
+    p->z = spawn_point->z;
+
+    return;
+  }
+
   // Direção de movimento com base nas teclas
   if (keys['w']) {
     moveX += p->gazeDirectionX;
