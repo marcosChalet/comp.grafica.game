@@ -76,6 +76,7 @@ void load_blocks_from_file(const char *filename) {
       addBlockToGlobalData(mb, behavior);
 
     } else if (behavior == BLOCK_T_SPAWN) {
+      set_spawn_point(x, y, z);
       init_player(x, y, z, get_global_player());
     } else {
       char *size_str = strstr(line, "size=");

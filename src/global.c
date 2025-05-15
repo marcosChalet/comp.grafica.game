@@ -17,6 +17,7 @@ GlobalData *create_global_data() {
   data->block_list = create_block_list();
   printf("creating player\n");
   data->player = create_player();
+  data->spawn_point = NULL;
 
   printf("global data object created\n");
 
@@ -31,6 +32,23 @@ Player *get_global_player() {
   if (global_data)
     return global_data->player;
   return NULL;
+}
+
+void set_spawn_point(float x, float y, float z) {
+  if (global_data->spawn_point) {
+    free(global_data->spawn_point);
+  }
+
+  SpawnPoint *spawn_point = (SpawnPoint *)malloc(sizeof(SpawnPoint));
+  spawn_point->x = x;
+  spawn_point->y = y;
+  spawn_point->z = z;
+
+  global_data->spawn_point = spawn_point;
+}
+
+SpawnPoint *get_spawn_point() {
+  return global_data->spawn_point;
 }
 
 void init_global_data() {

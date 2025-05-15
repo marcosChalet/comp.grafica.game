@@ -19,10 +19,11 @@ bool is_dead() {
 
 void respawn_player() {
   Player *player = get_global_player();
-  player->gazeDirectionY = -1.9;
-  player->x = 0;
-  player->y = 20;
-  player->z = 0.5;
+  SpawnPoint *spawn_point = get_spawn_point();
+
+  player->x = spawn_point->x;
+  player->y = spawn_point->y;
+  player->z = spawn_point->z;
 }
 
 void check_victory() {
