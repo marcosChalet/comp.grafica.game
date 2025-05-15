@@ -13,7 +13,7 @@ ifeq ($(OS), Linux)
 else ifeq ($(OS), Darwin)
 	LIBS = -lm -framework OpenGL -framework GLUT
 else
-	LIBS = -lm -lopengl32 -lglu32 -lfreeglut
+	LIBS = -lm -lopengl32 -lglu32 -lfreeglut -lSDL2 -lSDL2_mixer
 endif
 
 all: libsGame Game
