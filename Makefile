@@ -9,7 +9,7 @@ FLAG = -O3
 OS := $(shell uname)
 
 ifeq ($(OS), Linux)
-	LIBS = -lm -lGL -lGLU -lglut
+	LIBS = -lm -lGL -lGLU -lglut -lSDL2 -lSDL2_mixer
 else ifeq ($(OS), Darwin)
 	LIBS = -lm -framework OpenGL -framework GLUT
 else
@@ -33,7 +33,8 @@ libsGame: \
 	$(OBJ)/blocks.o \
 	$(OBJ)/blocks.o \
 	$(OBJ)/scene.o \
-	$(OBJ)/sun.o
+	$(OBJ)/sun.o \
+	$(OBJ)/audio.o
 	
 Game: clear_app \
 	$(BIN)/game

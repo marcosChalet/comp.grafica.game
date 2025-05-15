@@ -19,7 +19,10 @@
     "stdbool.h": "c",
     "global.h": "c",
     "collision-boxes.h": "c",
-    "routines.h": "c"
+    "routines.h": "c",
+    "sdl.h": "c",
+    "math.h": "c",
+    "sun.h": "c"
   },
   "C_Cpp.errorSquiggles": "disabled"
 }
